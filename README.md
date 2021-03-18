@@ -1,4 +1,4 @@
-flutter GUI/UI Examples
+flutter Examples
 ===========
 These are examples very basic examples using flutter.
 
