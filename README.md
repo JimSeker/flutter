@@ -1,6 +1,6 @@
 flutter Examples
 ===========
-These are examples very basic examples using flutter.
+These are examples very basic examples using flutter.  Note, I'm in the process of updating them the new versions.  Most currently will not even compile. 
 
 <b>bottomnavigationdemo</b> give you the basics to get the bottom navigation working.
 
@@ -8,7 +8,7 @@ These are examples very basic examples using flutter.
 
 <b>flutter_example</b> is pretty close the basic code lab example to get started.
 
-<b>formexample</b> is an attempt to redo the formexample in https://github.com/JimSeker/ui/tree/master/Basic 
+`form_example` is an attempt to redo the formexample in https://github.com/JimSeker/ui/tree/master/Basic 
 
 <b>httpdemo</b> is the basic example that flutter demos network with. 
 
@@ -18,8 +18,10 @@ These are examples very basic examples using flutter.
 
 <b>flutter_mapdemo</b> brings up google maps in flutter and show how to place a couple of markers.
 
-<b>flutterfirebasedemo</b> is a basic, but working firebase authen and firestore example.
+<b>flutterfirebasedemo</b> is a basic, but working firebase authentication and firestore example.
 
 
-These are example code for University of Wyoming, Cosc 4730 Mobile Programming course and cosc 4735 Advanced Mobile Programming.
+---
+
+These are example code for University of Wyoming, Cosc 4730 Mobile Programming course and cosc 4735 Advance Mobile Programing course. 
 All examples are for Android, but are written in flutter could be used on an Ios device, the web, or desktops as well.
