@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => new _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
 //class MyApp extends StatelessWidget {
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   TextEditingController nameController = TextEditingController();
   int _radioValue = 0;
 
-
   void _handleRadioValueChange(int? value) {
     setState(() {
       _radioValue = value!;
+      for(var num =0, x=1; num < 10; num++, x++) {
+
+      }
       switch (_radioValue) {
         case 0:
           Fluttertoast.showToast(
@@ -54,11 +58,11 @@ class _MyAppState extends State<MyApp> {
         child: Row(children: [
           const Text('Name: '),
           Flexible(
-            //needed, for the renderer to figure out dynamic in a row, which is static.
+              //needed, for the renderer to figure out dynamic in a row, which is static.
               child: TextField(
-                controller: nameController, //captures the text, I think.
-                decoration: const InputDecoration(helperText: "Enter Name"),
-              ))
+            controller: nameController, //captures the text, I think.
+            decoration: const InputDecoration(helperText: "Enter Name"),
+          ))
         ]));
     Widget rowThree = Container(
         padding: const EdgeInsets.all(8),
