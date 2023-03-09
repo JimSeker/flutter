@@ -6,6 +6,8 @@ These are examples very basic examples using flutter.  Note, I'm in the process 
 
 <b>button</b> is simple statefulwidget example of using a button and changing text 
 
+`dialog_Demo` is an example of several dialog boxs.
+
 <b>flutter_example</b> is pretty close the basic code lab example to get started.
 
 `form_example` is an attempt to redo the formexample in https://github.com/JimSeker/ui/tree/master/Basic 
