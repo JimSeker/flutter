@@ -26,7 +26,7 @@ class Album {
   final int id;
   final String title;
 
-  Album({this.userId, this.id, this.title});
+  Album({required this.userId, required this.id, required this.title});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
@@ -37,17 +37,37 @@ class Album {
   }
 }
 
-void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  MyApp({Key key}) : super(key: key);
-
-  @override
-  _MyAppState createState() => _MyAppState();
+void main() {
+  runApp(const MyApp());
 }
 
-class _MyAppState extends State<MyApp> {
-  Future<Album> futureAlbum;
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  late Future<Album> futureAlbum;
 
   @override
   void initState() {
@@ -65,20 +85,20 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Fetch Data Example'),
+          title: const Text('Fetch Data Example'),
         ),
         body: Center(
           child: FutureBuilder<Album>(
             future: futureAlbum,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Text(snapshot.data.title);
+                return Text( snapshot.data?.title ??  "no title");   //if title is null, return no title instead.
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
 
               // By default, show a loading spinner.
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             },
           ),
         ),
