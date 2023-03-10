@@ -2,7 +2,7 @@ flutter Examples
 ===========
 These are examples very basic examples using flutter.  Note, I'm in the process of updating them the new versions.  Most currently will not even compile. 
 
-<b>bottomnavigationdemo</b> give you the basics to get the bottom navigation working.
+`bottomnavigationdemo` sets the basics to get the bottom navigation working.
 
 `fab_demo` is simple statefulwidget example of using a floating action button and changing text.  some attempt at changing the theme as well.
 
