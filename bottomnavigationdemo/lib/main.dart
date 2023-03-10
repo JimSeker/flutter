@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
+/*
+ * shows how to setup a bottom Navigation view to use.
+ */
+
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -13,22 +19,22 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      darkTheme: ThemeData.dark(),
-      home: MyHomePage(title: 'Bottom Navigation Page'),
+      home: const MyHomePage(title: 'Bottom Navigation Page'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -41,32 +47,30 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               'Navigation button select is ',
             ),
             Text(
               '$_selectedIndex',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
+            icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.mail),
+            icon: Icon(Icons.mail),
             label: 'Messages',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
@@ -76,4 +80,5 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
 }
