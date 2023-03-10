@@ -6,15 +6,17 @@ These are examples very basic examples using flutter.  Note, I'm in the process 
 
 `fab_demo` is simple statefulwidget example of using a floating action button and changing text.  some attempt at changing the theme as well.
 
-`dialog_Demo` is an example of several dialog boxs.
+`dialog_Demo` is an example of several dialog boxes.
 
 <b>flutter_example</b> is pretty close the basic code lab example to get started.
 
 `form_example` is an attempt to redo the formexample in https://github.com/JimSeker/ui/tree/master/Basic 
 
+ `listview_demo` is an example of using a listview, dialogbox and addig to the list.
+
 <b>httpdemo</b> is the basic example that flutter demos network with. 
 
-<b>multiscreendemo</b> shows how to switch between two screens. 
+`multiscreendemo` shows how to switch between two screens. 
 
 `navigation_drawer_demo` uses a drawer to change to 3 different screens. 
 
