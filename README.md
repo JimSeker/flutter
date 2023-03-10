@@ -16,7 +16,7 @@ These are examples very basic examples using flutter.  Note, I'm in the process 
 
 <b>multiscreendemo</b> shows how to switch between two screens. 
 
-<b>navigation_drawer_demo</b> uses a drawer to change to 3 different screens. 
+`navigation_drawer_demo` uses a drawer to change to 3 different screens. 
 
 <b>flutter_mapdemo</b> brings up google maps in flutter and show how to place a couple of markers.
 

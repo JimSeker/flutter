@@ -5,18 +5,20 @@ import 'package:navigation_drawer_demo/second_screen.dart';
 import 'package:navigation_drawer_demo/third_screen.dart';
 
 class DrawerWidget extends StatefulWidget {
+  const DrawerWidget({super.key});
+
   @override
-  _DrawerWidgetState createState() => _DrawerWidgetState();
+  DrawerWidgetState createState() => DrawerWidgetState();
 }
 
-class _DrawerWidgetState extends State<DrawerWidget> {
+class DrawerWidgetState extends State<DrawerWidget> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: RadialGradient(
                 colors: [ Colors.white,Colors.blueAccent],
                 stops: [0.3, 1],
@@ -29,7 +31,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 Container(
                   width: 90.0,
                   height: 90.0,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
                           fit: BoxFit.cover,
@@ -43,8 +45,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ),
 
           ListTile(
-            leading: Icon(Icons.add),
-            title: Text('First Screen',style: TextStyle(fontWeight: FontWeight.bold),),
+            leading: const Icon(Icons.add),
+            title: const Text('First Screen',style: TextStyle(fontWeight: FontWeight.bold),),
             onTap: (){
               Navigator.pop(context);  //closes the drawer, now change screens.
               Navigator.push(context, MaterialPageRoute(
@@ -53,8 +55,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.check),
-            title: Text('Second Screen',style: TextStyle(fontWeight: FontWeight.bold),),
+            leading: const Icon(Icons.check),
+            title: const Text('Second Screen',style: TextStyle(fontWeight: FontWeight.bold),),
             onTap:  (){
               Navigator.pop(context);  //closes the drawer, now change screens.
               Navigator.push(context, MaterialPageRoute(
@@ -63,8 +65,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.insert_emoticon),
-            title:Text('Third Screen',style: TextStyle(fontWeight: FontWeight.bold),),
+            leading: const Icon(Icons.insert_emoticon),
+            title:const Text('Third Screen',style: TextStyle(fontWeight: FontWeight.bold),),
             onTap:  (){
               Navigator.pop(context);  //closes the drawer, now change screens.
               Navigator.push(context, MaterialPageRoute(
@@ -73,8 +75,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.home),
-            title:Text('Home Screen',style: TextStyle(fontWeight: FontWeight.bold),),
+            leading: const Icon(Icons.home),
+            title:const Text('Home Screen',style: TextStyle(fontWeight: FontWeight.bold),),
             onTap:  (){
               Navigator.pop(context);  //just closes the drawer.
             },
