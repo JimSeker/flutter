@@ -4,7 +4,7 @@ These are examples very basic examples using flutter.  Note, I'm in the process 
 
 <b>bottomnavigationdemo</b> give you the basics to get the bottom navigation working.
 
-<b>button</b> is simple statefulwidget example of using a button and changing text 
+`fab_demo` is simple statefulwidget example of using a floating action button and changing text.  some attempt at changing the theme as well.
 
 `dialog_Demo` is an example of several dialog boxs.
 

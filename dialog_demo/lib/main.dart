@@ -52,10 +52,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   double value = 50;
   String okcanel = "No value";
-  String input1 = "nothing1",
-      input2 = "nothing2";
-
-  void showdialog() {}
+  String input1 = "nothing1", input2 = "nothing2";
+  String selectedLanguage = "none";
 
   @override
   Widget build(BuildContext context) {
@@ -123,27 +121,72 @@ class _MyHomePageState extends State<MyHomePage> {
             //the dialog in in the dialogExample.dart file.
             ElevatedButton(
                 onPressed: () {
-                  showDialog(context: context,
+                  showDialog(
+                      context: context,
                       builder: (context) => DialogExample(
-                        onConfirm: (String one, String two) {
-                           setState( () {
-                              input1 = one;
-                              input2 = two;
-                           });
-                        },
-                      ));
+                            onConfirm: (String one, String two) {
+                              setState(() {
+                                input1 = one;
+                                input2 = two;
+                              });
+                            },
+                          ));
                   //val has the return value, so now set it in a setState so widget updates.
-
                 },
                 child: const Text('Slider dialog')),
+            Text("Selected langage is $selectedLanguage")
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
+        onPressed: () {showSimpleAlertDialog(context);},
+        tooltip: 'Pick a language',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  //Uses the future values to setup a dialog.  Note this is in the same class above
+  //so we can use the variable above.
+
+  showSimpleAlertDialog(BuildContext context) {
+    //Create a SimpleDialog
+    SimpleDialog dialog = SimpleDialog(
+      title: const Text('Select a language'),
+      children: <Widget>[
+        SimpleDialogOption(
+            onPressed: () {
+              Navigator.pop(context, 'JavaScript');
+            },
+            child: const Text('JavaScript')),
+        SimpleDialogOption(
+            onPressed: () {
+              Navigator.pop(context, 'Dart');
+            },
+            child: const Text('Dart')),
+        SimpleDialogOption(
+            onPressed: () {
+              Navigator.pop(context, 'Java');
+            },
+            child: const Text('Java')),
+        SimpleDialogOption(
+            onPressed: () {
+              Navigator.pop(context, 'Kotlin');
+            },
+            child: const Text('Kotlin'))
+      ],
+    );
+
+// Call showDialog function to show dialog.
+    Future futureValue = showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return dialog;
+        });
+    futureValue.then((language) => {
+          setState(() {
+            selectedLanguage = language;
+          })
+        });
   }
 }
