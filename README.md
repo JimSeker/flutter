@@ -1,6 +1,6 @@
 flutter Examples
 ===========
-These are examples very basic examples using flutter.  Note, I'm in the process of updating them the new versions.  Most currently will not even compile. 
+These are examples very basic examples using flutter.  Note, I'm in the process of updating them the new versions.  some may not even compile. 
 
 `bottomnavigationdemo` sets the basics to get the bottom navigation working.
 
@@ -8,15 +8,19 @@ These are examples very basic examples using flutter.  Note, I'm in the process 
 
 `dialog_Demo` is an example of several dialog boxes.
 
+`draw_Demo` show customPaint, gestureDectector, bottomnavigationbar, with dialogs and colorpicker dialog.
+
 <b>flutter_example</b> is pretty close the basic code lab example to get started.
 
 `form_example` is an attempt to redo the formexample in https://github.com/JimSeker/ui/tree/master/Basic 
 
  `listview_demo` is an example of using a listview, dialogbox and addig to the list.
 
-<b>httpdemo</b> is the basic example that flutter demos network with. 
+`httpdemo` is the basic example that flutter demos network with. 
 
 `multiscreendemo` shows how to switch between two screens. 
+
+`more_widgets_demo` Show how to use some more input widget and "small" static listview with a snackbar as well.
 
 `navigation_drawer_demo` uses a drawer to change to 3 different screens. 
 
