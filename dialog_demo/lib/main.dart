@@ -106,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               });
                             },
                           ));
-                  //val has the return value, so now set it in a setState so widget updates.
+                  // so now set it in a setState so widget updates.
                 },
                 child: const Text('Slider dialog')),
             Text("Selected langage is $selectedLanguage")
