@@ -9,8 +9,8 @@ import 'highscore.dart';
 // Here we are using a global variable. You can use something like
 // get_it in a production app.
 final dbHelper = DatabaseHelper();
-late List<HighScore>
-    myList; //I'd prefer it not global, but con't find a better way.
+//I'd prefer it not global, but can't find a better way.
+late List<HighScore> myList;
 
 void main() async {
   // Avoid errors caused by flutter upgrade.

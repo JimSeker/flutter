@@ -80,7 +80,7 @@ class DatabaseHelper {
   Future<int> insert(HighScore score) async {
     return await _db.insert(
       table,
-      score.toMapNoID(), //since id is autoincrmented, we don't provide it.
+      score.toMapNoID(), //since id is autoincrement, we don't provide it.
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -123,6 +123,7 @@ class DatabaseHelper {
       row.toMap(),
       where: '$columnId = ?',
       whereArgs: [id],
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
