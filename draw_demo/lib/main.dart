@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       ),
       // darkTheme: ThemeData.dark(),
       home: const MyHomePage(title: 'Drawing Demo Page'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
