@@ -10,7 +10,7 @@ These are examples very basic examples using flutter.  Note, I'm in the process 
 
 `draw_Demo` show customPaint, gestureDectector, bottomnavigationbar, with dialogs and colorpicker dialog.
 
-<b>sqlitedb_demo</b> uses sqflite (sqlite) to rework the database example [sqliteDBDemo in saveData Repo](https://github.com/JimSeker/saveData)
+`sqlitedb_demo` uses sqflite (sqlite) to rework the database example [sqliteDBDemo in saveData Repo](https://github.com/JimSeker/saveData)  (note fails on web, can't store per in a browser I guess).
 
 `form_example` is an attempt to redo the formexample in https://github.com/JimSeker/ui/tree/master/Basic 
  `listview_demo` is an example of using a listview, dialogbox and addig to the list.
@@ -22,6 +22,8 @@ These are examples very basic examples using flutter.  Note, I'm in the process 
 `more_widgets_demo` Show how to use some more input widget and "small" static listview with a snackbar as well.
 
 `navigation_drawer_demo` uses a drawer to change to 3 different screens. 
+
+`sensor_plugin_demo` uses the sensor_plugin and the battery_plus plugin to shows the battery level, accelerometer, gyroscope, user accelerometer (does have basic gravity included), and magnetometer values. 
 
 <b>flutter_mapdemo</b> brings up google maps in flutter and show how to place a couple of markers.
 
