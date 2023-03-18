@@ -10,7 +10,7 @@ import 'highscore.dart';
 // get_it in a production app.
 final dbHelper = DatabaseHelper();
 //I'd prefer it not global, but can't find a better way.
-late List<HighScore> myList;
+///late List<HighScore> myList;
 
 void main() async {
   // Avoid errors caused by flutter upgrade.
@@ -18,8 +18,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // initialize the database
   await dbHelper.init();
-  myList = await dbHelper
-      .queryAllRows(); //not sure if that is the correct way to do this, but I need list initialized for the listview.
+  // myList = await dbHelper
+  //     .queryAllRows(); //not sure if that is the correct way to do this, but I need list initialized for the listview.
   runApp(const MyApp());
 }
 
@@ -50,21 +50,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<HighScore>? myList;
+
+  @override
+  void initState() {
+    super.initState();
+    _query().then((values) {
+      setState(() {
+        myList = values;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (myList != null) {
+      myList?.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: ListView.builder(
-        itemCount: myList.length ?? 0,
+        itemCount: myList?.length ?? 0,
         //just in case the future hasn't returned yet.
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(myList[index].toString()),
+            title: Text(myList![index].toString()),
             onTap: () {
-              _ontap(myList[index]);
+              _ontap(myList![index]);
             },
           );
         },
@@ -128,14 +147,20 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         builder: (_) => AlertDialog(
               title: const Text("Add data"),
-              content: Column(children: [
-                TextFormField(
-                  controller: nameController,
-                ),
-                TextFormField(
-                  controller: scoreController,
-                )
-              ]),
+              content: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    TextFormField(
+                      decoration:
+                          const InputDecoration(hintText: "Enter name here"),
+                      controller: nameController,
+                    ),
+                    TextFormField(
+                      decoration:
+                          const InputDecoration(hintText: "Enter Score here"),
+                      controller: scoreController,
+                    )
+                  ]),
               actions: <Widget>[
                 TextButton(
                   child: const Text('Cancel'),
