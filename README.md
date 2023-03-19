@@ -19,11 +19,15 @@ These are examples very basic examples using flutter.  Note, I'm in the process 
 
 `multiscreendemo` shows how to switch between two screens. 
 
+`mlkit_demo` show how to use the mlkit face with a still frame picture either camera or gallery. 
+
 `more_widgets_demo` Show how to use some more input widget and "small" static listview with a snackbar as well.
 
 `navigation_drawer_demo` uses a drawer to change to 3 different screens. 
 
 `sensor_plugin_demo` uses the sensor_plugin and the battery_plus plugin to shows the battery level, accelerometer, gyroscope, user accelerometer (does have basic gravity included), and magnetometer values. 
+
+`take_pic_demo` show how to get picture from the gallery or camera and display it. 
 
 <b>flutter_mapdemo</b> brings up google maps in flutter and show how to place a couple of markers.
 
