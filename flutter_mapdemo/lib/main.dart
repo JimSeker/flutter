@@ -1,19 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-//https://codelabs.developers.google.com/codelabs/google-maps-in-flutter#0
+//note, in the android build.gradle, since flutter thinks 16 is the right sdk and it's not
+//manually set to 24 for maps.
 
-void main() => runApp(MyApp());
-
-final LatLng CHEYENNE = new LatLng(41.1400, -104.8197);  //Note, West is a negative, East is positive
-final LatLng LARAMIE = new LatLng(41.312928, -105.587253);
-
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
+void main() {
+  runApp(const MyApp());
 }
 
-class _MyAppState extends State<MyApp> {
+const LatLng CHEYENNE = LatLng(41.1400, -104.8197);
+const LatLng LARAMIE = LatLng(41.312928, -105.587253);
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   late GoogleMapController mapController;
 
   final Map<String, Marker> _markers = {};
@@ -22,46 +45,32 @@ class _MyAppState extends State<MyApp> {
     mapController = controller;
     setState(() {
       _markers.clear();
-      Marker laramie_marker = Marker(
-        markerId: MarkerId("Laramie"),
-        position: LARAMIE,
-        infoWindow: InfoWindow(
-           title: "Laramie",
-          snippet: "home of UW"
-        )
-      );
-      _markers["Laramie"] = laramie_marker;
-      Marker cheyenne_marker = Marker(
+      Marker laramieMarker = const Marker(
+          markerId: MarkerId("Laramie"),
+          position: LARAMIE,
+          infoWindow:
+              InfoWindow(title: "Laramie", snippet: "home of UW"));
+      _markers["Laramie"] = laramieMarker;
+      Marker cheyenneMarker = const Marker(
           markerId: MarkerId("Cheyenne"),
           position: CHEYENNE,
-          infoWindow: InfoWindow(
-              title: "Cheyenne",
-              snippet: "State Captial"
-          )
-      );
-      _markers["Cheyenne"] = cheyenne_marker;
-
-
+          infoWindow:
+              InfoWindow(title: "Cheyenne", snippet: "State Capital"));
+      _markers["Cheyenne"] = cheyenneMarker;
     });
   }
 
-
-
- /* void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-*/
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Flutter Maps Demo'),
+          title: const Text('Flutter Maps Demo'),
           backgroundColor: Colors.green[700],
         ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
+          initialCameraPosition: const CameraPosition(
             target: LARAMIE,
             zoom: 11.0,
           ),
@@ -71,4 +80,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
