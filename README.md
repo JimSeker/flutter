@@ -10,9 +10,10 @@ These are examples very basic examples using flutter.  Note, I'm in the process 
 
 `draw_Demo` show customPaint, gestureDectector, bottomnavigationbar, with dialogs and colorpicker dialog.
 
-`sqlitedb_demo` uses sqflite (sqlite) to rework the database example [sqliteDBDemo in saveData Repo](https://github.com/JimSeker/saveData)  (note fails on web, can't store per in a browser I guess).
+`sqlitedb_demo` uses sqflite (sqlite) to rework the database example [sqliteDBDemo in saveData Repo](https://github.com/JimSeker/saveData)  (note fails on web, can't store db in a browser I guess).
 
-`form_example` is an attempt to redo the formexample in https://github.com/JimSeker/ui/tree/master/Basic 
+`form_example` is an attempt to redo the formexample in [formexample in basic](https://github.com/JimSeker/ui/tree/master/Basic)
+
  `listview_demo` is an example of using a listview, dialogbox and addig to the list.
 
 `httpdemo` is the basic example that flutter demos network with. 
