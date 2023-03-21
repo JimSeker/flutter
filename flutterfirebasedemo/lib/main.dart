@@ -1,18 +1,18 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart'; // new
-import 'package:firebase_auth/firebase_auth.dart'; // new
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart'; // new
-
-import 'src/authentication.dart'; // new
+import 'package:provider/provider.dart';
+import 'firebase_options.dart';
+import 'src/authentication.dart';
 import 'src/widgets.dart';
 
-//https://www.youtube.com/watch?v=EXp0gq9kGxI&t=114s
-//https://github.com/flutter/codelabs/tree/master/firebase-get-to-know-flutter
+/// note, flutter is using a default of min of 16, required min is 21.  changed
+/// manually in the android build.gradle file to 24.
+
 
 Future<void> main() async {
   runApp(ChangeNotifierProvider(
@@ -22,7 +22,11 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _fbapp = Firebase.initializeApp();
+  MyApp({super.key});
+
+  final Future<FirebaseApp> _fbapp = Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
 
   // This widget is the root of your application.
   @override
@@ -41,43 +45,36 @@ class MyApp extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               print('You have an error! ${snapshot.error.toString()}');
-              return Text('Something went wrong!');
+              return const Text('Something went wrong!');
             } else if (snapshot.hasData) {
-              return MyHomePage();
+              return const MyHomePage(
+                title: "Firebase Demo",
+              );
             } else {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }
           },
-        )
-        //home: MyHomePage(title: 'Flutter Demo Home Page'),
-        );
+        ));
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
+
+  final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text("Fb Firestone example"),
+        title: const Text("Fb Firestone example"),
       ),
       body: ListView(children: <Widget>[
         Consumer<ApplicationState>(
@@ -94,25 +91,24 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: const <Widget>[
             Text(
               'This is the data:',
             ),
           ],
         ),
         Consumer<ApplicationState>(
-            builder: (context, appState, _) =>
-                Column(children: [
-                  SizedBox( height: 400, child: dataList()),
-                ])
-        ),
-        Consumer<ApplicationState> (
-            builder: (context, appState, _) =>
-                Column(children: [
-                  StyledButton(child: Text('Add new data'),
-                      onPressed: () {appState.addData(); })
-                  ])
-        ),
+            builder: (context, appState, _) => Column(children: [
+                  SizedBox(height: 400, child: dataList()),
+                ])),
+        Consumer<ApplicationState>(
+            builder: (context, appState, _) => Column(children: [
+                  StyledButton(
+                      child: Text('Add new data'),
+                      onPressed: () {
+                        appState.addData();
+                      })
+                ])),
       ]),
     );
   }
@@ -184,6 +180,7 @@ class ApplicationState extends ChangeNotifier {
       notifyListeners();
     });
   }
+
   StreamSubscription<QuerySnapshot>? _dataSubscription;
 
   Future<DocumentReference> addData() {
@@ -194,26 +191,28 @@ class ApplicationState extends ChangeNotifier {
       'middle': "George"
     });
   }
+
   //everything needed for the authentication method
 
   ApplicationLoginState get loginState => _loginState;
   ApplicationLoginState _loginState = ApplicationLoginState.loggedOut;
 
-
   String? _email;
+
   String? get email => _email;
+
   void startLoginFlow() {
     _loginState = ApplicationLoginState.emailAddress;
     notifyListeners();
   }
 
   void verifyEmail(
-      String email,
-      void Function(FirebaseAuthException e) errorCallback,
-      ) async {
+    String email,
+    void Function(FirebaseAuthException e) errorCallback,
+  ) async {
     try {
       var methods =
-      await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
       if (methods.contains('password')) {
         _loginState = ApplicationLoginState.password;
       } else {
@@ -227,10 +226,10 @@ class ApplicationState extends ChangeNotifier {
   }
 
   void signInWithEmailAndPassword(
-      String email,
-      String password,
-      void Function(FirebaseAuthException e) errorCallback,
-      ) async {
+    String email,
+    String password,
+    void Function(FirebaseAuthException e) errorCallback,
+  ) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -251,7 +250,8 @@ class ApplicationState extends ChangeNotifier {
     try {
       var credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      await credential.user!.updateProfile(displayName: displayName);
+      //await credential.user!.updateProfile(displayName: displayName);
+      await credential.user!.updateDisplayName(displayName);
     } on FirebaseAuthException catch (e) {
       errorCallback(e);
     }
@@ -261,10 +261,7 @@ class ApplicationState extends ChangeNotifier {
     FirebaseAuth.instance.signOut();
   }
 
-  //---------------------------------------------------
-
-
-
+//---------------------------------------------------
 }
 
 class dataInfo {
@@ -290,14 +287,13 @@ class _dataListState extends State<dataList> {
   @override
   // Modify from here
   Widget build(BuildContext context) {
-    return
-      ListView.builder(
-        itemCount: _dataInfos.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text('${_dataInfos[index].last}'),
-          );
-        },
-      );
+    return ListView.builder(
+      itemCount: _dataInfos.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text('${_dataInfos[index].last}, ${_dataInfos[index].first}'),
+        );
+      },
+    );
   }
 }

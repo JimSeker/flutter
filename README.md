@@ -29,9 +29,9 @@ These are examples very basic examples using flutter.  Note, I'm in the process 
 
 `take_pic_demo` show how to get picture from the gallery or camera and display it. 
 
-<b>flutter_mapdemo</b> brings up google maps in flutter and show how to place a couple of markers.
+`flutter_mapdemo` brings up google maps in flutter and show how to place a couple of markers.
 
-<b>flutterfirebasedemo</b> is a basic, but working firebase authentication and firestore example.
+`flutterfirebasedemo` is a basic, but working firebase authentication and firestore example.
 
 
 ---
