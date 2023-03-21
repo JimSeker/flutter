@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:navigation_drawer_demo/drawer_widget.dart';
-
-/// This example uses a lot of code from https://github.com/am1994/navigation_drawer
-/// some changes and additions have been made as well.
+import 'package:navigation_drawer_demo/second_view.dart';
+import 'package:navigation_drawer_demo/third_view.dart';
+import 'package:navigation_drawer_demo/first_view.dart';
+import 'package:navigation_drawer_demo/main_view.dart';
+import 'package:navigation_drawer_demo/routes/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,32 +17,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Navigation Drawer Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MainView(),
+      routes: {
+        routes.main: (context) => MainView(),
+        routes.first: (context) => FirstView(),
+        routes.second: (context) => SecondView(),
+        routes.third: (context) => ThirdView(),
+      },
     );
   }
 }
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      drawer: const DrawerWidget(),
-      body: const SafeArea(
-        child: Center(
-          child: Text('Welcome to Home Screen'),
-        ),
-      ),
-    );
-  }
-
-}
-
