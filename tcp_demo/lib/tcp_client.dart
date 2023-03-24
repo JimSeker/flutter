@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'dart:convert';
 import 'dart:async';
+import 'dart:developer' as developer;
 
 class MyConnection extends StatefulWidget {
   const MyConnection({super.key});
@@ -36,7 +36,7 @@ class MyConnectionState extends State<MyConnection> {
 
   //starting the connection and listening to the socket asynchronously
   void startConnection() async {
-    print('attempting connection');
+    developer.log('attempting connection');
     //Instantiating the class with the Ip and the PortNumber
     try {
       int portnum = int.parse(port.text);
@@ -44,14 +44,14 @@ class MyConnectionState extends State<MyConnection> {
       setState(() {
         connected = true;
       });
-      print(
+      developer.log(
           'Connected to: ${socket.remoteAddress.address}:${socket.remotePort}');
 
       _streamSubscriptions.add(socket.listen(
         // handle data from the server
         (data) {
           final serverResponse = String.fromCharCodes(data);
-          print('Server: $serverResponse');
+          developer.log('Server: $serverResponse');
           setState(() {
             message += "$serverResponse \n";
           });
@@ -59,24 +59,24 @@ class MyConnectionState extends State<MyConnection> {
 
         // handle errors
         onError: (error) {
-          print(error);
+          developer.log(error);
           socket.destroy();
         },
 
         // handle server ending connection
         onDone: () {
-          print('Server left.');
+          developer.log('Server left.');
           socket.destroy();
         },
       ));
       sendMessage("Hi from Flutter client");
     } on SocketException catch (error) {
-      print(error);
+      developer.log("SocketException", error: error);
     }
   }
 
   Future<void> sendMessage(String message) async {
-    print('Client: $message');
+    developer.log('Client: $message');
     socket.writeln(message);
     //await Future.delayed(Duration(seconds: 2));
   }

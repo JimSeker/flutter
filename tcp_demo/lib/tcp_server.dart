@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'dart:convert';
 import 'dart:async';
+import 'dart:developer' as developer;
 
 class MyServer extends StatefulWidget {
   const MyServer({super.key});
@@ -18,6 +18,7 @@ class MyServerState extends State<MyServer> {
   final _streamSubscriptions = <StreamSubscription<dynamic>>[];
   String message = "";
   TextEditingController port = TextEditingController();
+  TextEditingController msg = TextEditingController();
 
   @override
   void initState() {
@@ -36,7 +37,6 @@ class MyServerState extends State<MyServer> {
 
   //starting the connection and listening to the socket asynchronously
   void startConnection() async {
-
     //Instantiating the class with the Ip and the PortNumber
     try {
       int portnum = int.parse(port.text);
@@ -44,53 +44,77 @@ class MyServerState extends State<MyServer> {
       // listen for clent connections to the server
       serverSocket.listen((client) {
         socket = client;
-        print('Connection from'
-            ' ${client.remoteAddress.address}:${client.remotePort}');
-
+        developer.log('Connection from  ${client.remoteAddress.address}:${client.remotePort}');
         setState(() {
           connected = true;
         });
         _streamSubscriptions.add(socket.listen(
           // handle data from the server
-              (data) {
+          (data) {
             final serverResponse = String.fromCharCodes(data);
-            print('Server: $serverResponse');
+
+            developer.log('Server: $serverResponse');
             setState(() {
-              message = serverResponse;
+              message += "Received: $serverResponse\n";
             });
           },
 
           // handle errors
           onError: (error) {
-            print(error);
+            developer.log("onError", error: error);
             socket.destroy();
+            setState(() {
+              message += "ERROR\n";
+              connected = true;
+            });
           },
 
           // handle server ending connection
           onDone: () {
-            print('Server left.');
+           developer.log('Client left.');
+            setState(() {
+              connected = false;
+              message += "Client closed the connection\n";
+            });
             socket.destroy();
           },
         ));
         //handleConnection(client);
       });
     } on SocketException catch (error) {
-      print(error);
+      developer.log("SocketException", error: error);
     }
   }
 
   Future<void> sendMessage(String message) async {
-    print('Client: $message');
+    developer.log('Client: $message');
     socket.writeln(message);
+    setState(() {
+      message += "SENT: $message\n";
+    });
     //await Future.delayed(Duration(seconds: 2));
+  }
+
+  void send() {
+    if (msg.text != "") {
+      sendMessage(msg.text);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: (connected)
-            ? Center(
-                child: Text("message is $message"),
+            ? Column(
+                children: [
+                  TextField(
+                      controller: msg,
+                      decoration:
+                      const InputDecoration(helperText: "Enter message to send")),
+                  TextButton(
+                      onPressed: send, child: const Text('Send')),
+                  Text("Logger:\n $message"),
+                ],
               )
             : Column(
                 children: [
@@ -100,6 +124,7 @@ class MyServerState extends State<MyServer> {
                           const InputDecoration(helperText: "Enter port")),
                   TextButton(
                       onPressed: startConnection, child: const Text('Accept')),
+                  Text("Logger:\n $message"),
                 ],
               ));
   }
