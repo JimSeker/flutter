@@ -108,7 +108,7 @@ class MyConnectionState extends State<MyConnection> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: (connected)
-            ? Column(
+            ? Column( mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextField(
                       controller: msg,
@@ -116,7 +116,7 @@ class MyConnectionState extends State<MyConnection> {
                           helperText: "Enter message to send")),
                   TextButton(onPressed: send, child: const Text('Send')),
                   TextButton(
-                      onPressed: startConnection, child: const Text('close')),
+                      onPressed: closeConnection, child: const Text('close')),
                   Text("Logger:\n $message"),
                 ],
               )

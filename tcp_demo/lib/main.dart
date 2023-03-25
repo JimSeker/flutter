@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tcp_demo/tcp_client.dart';
 import 'package:tcp_demo/tcp_server.dart';
 
-
 //https://medium.com/flutter-community/working-with-sockets-in-dart-15b443007bc9
 //https://codewithandrea.com/articles/flutter-exception-handling-try-catch-result-type/
-
 
 void main() {
   runApp(const MyApp());
@@ -41,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onItemTapped(int index) {
     setState(() {
-      selectedIndex = index ;
+      selectedIndex = index;
     });
   }
 
@@ -51,10 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: (selectedIndex==0)  ?
-           MyConnection() : MyServer()
-      ),
+      body: (selectedIndex == 0) ? MyConnection() : MyServer(),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(

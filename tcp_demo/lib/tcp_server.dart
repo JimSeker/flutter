@@ -14,6 +14,7 @@ class MyServerState extends State<MyServer> {
   bool connected = false;
   late Socket socket;
   late ServerSocket serverSocket;
+  var myAddress;
 
   final _streamSubscriptions = <StreamSubscription<dynamic>>[];
   String message = "";
@@ -25,6 +26,20 @@ class MyServerState extends State<MyServer> {
     super.initState();
     port.text = '3012';
     //  startConnection();
+    getinfo();
+  }
+
+  Future<void> getinfo() async {
+    List<NetworkInterface> address = await NetworkInterface.list(
+      includeLoopback: false,
+    );
+    for (var element in address) {
+      for (var element in element.addresses) {
+        setState(() {
+          message += "$element.address\n";
+        });
+      }
+    }
   }
 
   @override
@@ -44,7 +59,8 @@ class MyServerState extends State<MyServer> {
       // listen for clent connections to the server
       serverSocket.listen((client) {
         socket = client;
-        developer.log('Connection from  ${client.remoteAddress.address}:${client.remotePort}');
+        developer.log(
+            'Connection from  ${client.remoteAddress.address}:${client.remotePort}');
         setState(() {
           connected = true;
         });
@@ -71,7 +87,7 @@ class MyServerState extends State<MyServer> {
 
           // handle server ending connection
           onDone: () {
-           developer.log('Client left.');
+            developer.log('Client left.');
             setState(() {
               connected = false;
               message += "Client closed the connection\n";
@@ -100,6 +116,7 @@ class MyServerState extends State<MyServer> {
       sendMessage(msg.text);
     }
   }
+
   void closeConnection() {
     socket.destroy();
     setState(() {
@@ -107,20 +124,20 @@ class MyServerState extends State<MyServer> {
       message += "Server closed socket.\n";
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: (connected)
-            ? Column(
+            ? Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   TextField(
                       controller: msg,
-                      decoration:
-                      const InputDecoration(helperText: "Enter message to send")),
+                      decoration: const InputDecoration(
+                          helperText: "Enter message to send")),
+                  TextButton(onPressed: send, child: const Text('Send')),
                   TextButton(
-                      onPressed: send, child: const Text('Send')),
-                  TextButton(
-                      onPressed: startConnection, child: const Text('close')),
+                      onPressed: closeConnection, child: const Text('close')),
                   Text("Logger:\n $message"),
                 ],
               )
