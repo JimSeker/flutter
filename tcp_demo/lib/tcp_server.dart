@@ -65,7 +65,7 @@ class MyServerState extends State<MyServer> {
             socket.destroy();
             setState(() {
               message += "ERROR\n";
-              connected = true;
+              connected = false;
             });
           },
 
@@ -100,7 +100,13 @@ class MyServerState extends State<MyServer> {
       sendMessage(msg.text);
     }
   }
-
+  void closeConnection() {
+    socket.destroy();
+    setState(() {
+      connected = false;
+      message += "Server closed socket.\n";
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,6 +119,8 @@ class MyServerState extends State<MyServer> {
                       const InputDecoration(helperText: "Enter message to send")),
                   TextButton(
                       onPressed: send, child: const Text('Send')),
+                  TextButton(
+                      onPressed: startConnection, child: const Text('close')),
                   Text("Logger:\n $message"),
                 ],
               )

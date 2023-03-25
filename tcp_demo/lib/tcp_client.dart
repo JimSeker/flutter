@@ -15,8 +15,9 @@ class MyConnectionState extends State<MyConnection> {
   late Socket socket;
   final _streamSubscriptions = <StreamSubscription<dynamic>>[];
   String message = "";
-  TextEditingController name = TextEditingController(),
-      port = TextEditingController();
+  TextEditingController name = TextEditingController();
+  TextEditingController port = TextEditingController();
+  TextEditingController msg = TextEditingController();
 
   @override
   void initState() {
@@ -61,11 +62,19 @@ class MyConnectionState extends State<MyConnection> {
         onError: (error) {
           developer.log(error);
           socket.destroy();
+          setState(() {
+            message += "ERROR\n";
+            connected = false;
+          });
         },
 
         // handle server ending connection
         onDone: () {
           developer.log('Server left.');
+          setState(() {
+            connected = false;
+            message += "Server closed the connection\n";
+          });
           socket.destroy();
         },
       ));
@@ -81,17 +90,40 @@ class MyConnectionState extends State<MyConnection> {
     //await Future.delayed(Duration(seconds: 2));
   }
 
+  void send() {
+    if (msg.text != "") {
+      sendMessage(msg.text);
+    }
+  }
+
+  void closeConnection() {
+    socket.destroy();
+    setState(() {
+      connected = false;
+      message += "client closed socket.\n";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: (connected)
-            ? Center(
-                child: Text("logger:\n $message"),
+            ? Column(
+                children: [
+                  TextField(
+                      controller: msg,
+                      decoration: const InputDecoration(
+                          helperText: "Enter message to send")),
+                  TextButton(onPressed: send, child: const Text('Send')),
+                  TextButton(
+                      onPressed: startConnection, child: const Text('close')),
+                  Text("Logger:\n $message"),
+                ],
               )
             : Column(
                 children: [
                   TextField(
-                      controller: name, //captures the text, I think.
+                      controller: name,
                       decoration:
                           const InputDecoration(helperText: "Enter Name")),
                   TextField(
