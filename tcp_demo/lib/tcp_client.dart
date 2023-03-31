@@ -3,6 +3,11 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:developer' as developer;
 
+///This is the client side of the code.  It takes an ip address and port number
+///once entered (there are default values), you can connect to the server side
+///of this or use something like an echo server or any server, since it you can
+///then send messages of your crafting.   When done, close the socket.
+
 class MyConnection extends StatefulWidget {
   const MyConnection({super.key});
 
@@ -84,10 +89,9 @@ class MyConnectionState extends State<MyConnection> {
     }
   }
 
-  Future<void> sendMessage(String message) async {
+  void sendMessage(String message) {
     developer.log('Client: $message');
     socket.writeln(message);
-    //await Future.delayed(Duration(seconds: 2));
   }
 
   void send() {
@@ -108,7 +112,9 @@ class MyConnectionState extends State<MyConnection> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: (connected)
-            ? Column( mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start,
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextField(
                       controller: msg,
@@ -121,6 +127,8 @@ class MyConnectionState extends State<MyConnection> {
                 ],
               )
             : Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextField(
                       controller: name,

@@ -3,6 +3,12 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:developer' as developer;
 
+///This is the server side of the code.   it has a button to setup the server
+///to listen for connections.  Once established, you can then send an receive
+///messages until you close the socket.
+/// it also will display the server ip address in the logger so the client side
+/// know which ip address to use.
+
 class MyServer extends StatefulWidget {
   const MyServer({super.key});
 
@@ -56,7 +62,7 @@ class MyServerState extends State<MyServer> {
     try {
       int portnum = int.parse(port.text);
       serverSocket = await ServerSocket.bind(InternetAddress.anyIPv4, portnum);
-      // listen for clent connections to the server
+      // listen for client connections to the server
       serverSocket.listen((client) {
         socket = client;
         developer.log(
@@ -102,13 +108,12 @@ class MyServerState extends State<MyServer> {
     }
   }
 
-  Future<void> sendMessage(String message) async {
+  void sendMessage(String message) {
     developer.log('Client: $message');
     socket.writeln(message);
     setState(() {
       message += "SENT: $message\n";
     });
-    //await Future.delayed(Duration(seconds: 2));
   }
 
   void send() {
@@ -129,7 +134,9 @@ class MyServerState extends State<MyServer> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: (connected)
-            ? Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start,
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   TextField(
                       controller: msg,
@@ -142,6 +149,8 @@ class MyServerState extends State<MyServer> {
                 ],
               )
             : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   TextField(
                       controller: port,
