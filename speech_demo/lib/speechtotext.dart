@@ -1,4 +1,5 @@
 import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -28,20 +29,22 @@ class SpeechToTextState extends State<SpeechToTextWidget> {
   }
 
   /// This has to happen only once per app
-  void initSpeech() async {
-     speechToText.initialize().then((value) {
-       setState(() {
-         message += "initialized is $value.\n";
-       });
-       return speechEnabled = value;
-     });
-
-
+   initSpeech() async {
+    speechToText
+        .initialize(onError: errorListener, onStatus: statusListener)
+        .then((value) {
+      setState(() {
+        message += "initialized is $value.\n";
+      });
+      speechEnabled = value;
+      return ;
+    });
   }
 
   /// Each time to start a speech recognition session
   void startListening() async {
     if (speechEnabled) {
+      //await speechToText.listen(onResult: onSpeechResult, partialResults: false);
       await speechToText.listen(onResult: onSpeechResult);
       setState(() {
         message += "Speech to text started.\n";
@@ -51,8 +54,21 @@ class SpeechToTextState extends State<SpeechToTextWidget> {
       setState(() {
         message += "Speech not started, not initialized?.\n";
       });
-
     }
+  }
+
+  void errorListener(SpeechRecognitionError error) {
+    setState(() {
+      listening = speechToText.isListening;
+      message += '${error.errorMsg} - ${error.permanent} \n';
+    });
+  }
+
+  void statusListener(String status) {
+    setState(() {
+      listening = speechToText.isListening;
+      message += 'Received listener status: $status \n';
+    });
   }
 
   /// Manually stop the active speech recognition session
@@ -69,10 +85,10 @@ class SpeechToTextState extends State<SpeechToTextWidget> {
 
   /// This is the callback that the SpeechToText plugin calls when
   /// the platform returns recognized words.
-  void onSpeechResult(SpeechRecognitionResult  result) {
+  void onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       String words = result.recognizedWords;
-      if (words.isNotEmpty ) {
+      if (words.isNotEmpty) {
         message += "$words\n";
       } else {
         message += "no words recognized.\n";
@@ -93,7 +109,12 @@ class SpeechToTextState extends State<SpeechToTextWidget> {
                     icon: const Icon(Icons.stop, color: Colors.red),
                     label: const Text('Stop'),
                   ),
-                  Text("Logger:\n $message"),
+                  Expanded(
+                      child: SingleChildScrollView(
+                          child: Text(
+                    "Logger:\n $message",
+                    overflow: TextOverflow.visible,
+                  ))),
                 ],
               )
             : Column(
@@ -106,7 +127,12 @@ class SpeechToTextState extends State<SpeechToTextWidget> {
                     ),
                     label: const Text('Start'),
                   ),
-                  Text("Logger:\n $message"),
+                  Expanded(
+                      child: SingleChildScrollView(
+                          child: Text(
+                    "Logger:\n $message",
+                    overflow: TextOverflow.visible,
+                  ))),
                 ],
               ));
   }

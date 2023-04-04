@@ -25,10 +25,12 @@ class TextToSpeechState extends State<TextToSpeech> {
 
   late FlutterTts flutterTts;
 
-
   bool get isIOS => !kIsWeb && Platform.isIOS;
+
   bool get isAndroid => !kIsWeb && Platform.isAndroid;
+
   bool get isWindows => !kIsWeb && Platform.isWindows;
+
   bool get isWeb => kIsWeb;
 
   @override
@@ -97,22 +99,21 @@ class TextToSpeechState extends State<TextToSpeech> {
 
     //start speaking.
     await flutterTts.speak(msg.text);
-
   }
 
   Future stop() async {
     if (isWeb) {
-      setState(() => message += "Stop is broken on web, ignoring.\n" );
+      setState(() => message += "Stop is broken on web, ignoring.\n");
       return;
     }
 
     var result = await flutterTts.stop();
-    if (result == 1) setState(() => message += "Stop\n" );
+    if (result == 1) setState(() => message += "Stop\n");
   }
 
   Future pause() async {
     var result = await flutterTts.pause();
-    if (result == 1) setState(() => message += "Paused\n" );
+    if (result == 1) setState(() => message += "Paused\n");
   }
 
   @override
@@ -130,13 +131,17 @@ class TextToSpeechState extends State<TextToSpeech> {
       children: [
         TextField(
             controller: msg,
-            decoration: const InputDecoration(
-                helperText: "Enter message to speak")),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            decoration:
+                const InputDecoration(helperText: "Enter message to speak")),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ElevatedButton.icon(
               onPressed: speak,
-              icon: const Icon(Icons.play_arrow, color: Colors.green,),
+              icon: const Icon(
+                Icons.play_arrow,
+                color: Colors.green,
+              ),
               label: const Text('Play'),
             ),
             ElevatedButton.icon(
@@ -151,7 +156,12 @@ class TextToSpeechState extends State<TextToSpeech> {
             ),
           ],
         ),
-        Text("Logger:\n $message"),
+        Expanded(
+            child: SingleChildScrollView(
+                child: Text(
+          "Logger:\n $message",
+          overflow: TextOverflow.visible,
+        ))),
       ],
     ));
   }
