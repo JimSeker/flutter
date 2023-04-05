@@ -1,5 +1,3 @@
-// ignore_for_file: unused_import, use_key_in_widget_constructors, unused_local_variable, prefer_const_literals_to_create_immutables, prefer_const_constructors, deprecated_member_use, sized_box_for_whitespace, avoid_print
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -56,22 +54,22 @@ class _MyHomePageState extends State<MyHomePage> {
             //if image null show text
             photo != null
                 ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.file(
-                  //to show image, you type like this.
-                  File(photo!.path),
-                  fit: BoxFit.fill,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
+                        //to show image, you type like this.
+                        File(photo!.path),
+                        fit: BoxFit.fill,
 //                  width: MediaQuery.of(context).size.width,
 //                  height: 300,
-                ),
-              ),
-            )
+                      ),
+                    ),
+                  )
                 : const Text(
-              "No Image",
-              style: TextStyle(fontSize: 20),
-            )
+                    "No Image",
+                    style: TextStyle(fontSize: 20),
+                  )
           ],
         ),
       ),
@@ -84,12 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void getPhoto() {
-   // source: ImageSource.gallery to pick a photo.   pickVideo( ... ) to change to videos.
-     _picker.pickImage(source: ImageSource.camera)
-        .then((value) {
-          setState(() {
-            photo= value;
-          });
-        });
+    // source: ImageSource.gallery to pick a photo.   pickVideo( ... ) to change to videos.
+    _picker.pickImage(source: ImageSource.camera).then((value) {
+      setState(() {
+        photo = value;
+      });
+    });
   }
 }
