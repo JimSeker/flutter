@@ -16,7 +16,7 @@ import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 /// This example uses bits and pieces of the mlkit example code but for a still frame
 /// also their code is bad style and in places just hacked together.
 ///    I've attempted to clean up the pieces I used.
-/// the coordiantes_translator and face_detector_painter files are not used, but
+/// the coordinates_translator and face_detector_painter files are not used, but
 /// were used as reference.
 
 void main() {
@@ -77,30 +77,17 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            //if image null show text
-            photo != null
-                ? FittedBox(
-                    child: SizedBox(
-                        width: image?.width.toDouble(),
-                        height: image?.height.toDouble(),
-                        child: CustomPaint(
-                            painter: FacePainter(
-                                image: image!,
-                                faces: faces
-                                ))))
-                : const Text(
-                    "No Image",
-                    style: TextStyle(fontSize: 20),
-                  )
-          ],
-        ),
-      ),
+      body: photo != null
+          ? FittedBox(
+              child: SizedBox(
+                  width: image?.width.toDouble(),
+                  height: image?.height.toDouble(),
+                  child: CustomPaint(
+                      painter: FacePainter(image: image!, faces: faces))))
+          : const Text(
+              "No Image",
+              style: TextStyle(fontSize: 20),
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: getPhoto,
         tooltip: 'take photo',
@@ -112,7 +99,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void getPhoto() {
     //so dumb set of casts.
     // source: ImageSource.gallery to pick a photo.   pickVideo( ... ) to change to videos.
-
     _picker.pickImage(source: ImageSource.camera).then((value) async {
       //retruns an Xfile?  we need a file
       photo = value;
@@ -135,8 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class FacePainter extends CustomPainter {
-  FacePainter(
-      {required this.image, required this.faces});
+  FacePainter({required this.image, required this.faces});
 
   ui.Image image;
   List<Face> faces;
