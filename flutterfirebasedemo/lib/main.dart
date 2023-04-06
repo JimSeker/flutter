@@ -13,7 +13,6 @@ import 'src/widgets.dart';
 /// note, flutter is using a default of min of 16, required min is 21.  changed
 /// manually in the android build.gradle file to 24.
 
-
 Future<void> main() async {
   runApp(ChangeNotifierProvider(
     create: (context) => ApplicationState(),
@@ -24,9 +23,8 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final Future<FirebaseApp> _fbapp = Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
+  final Future<FirebaseApp> _fbapp =
+      Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // This widget is the root of your application.
   @override
@@ -101,16 +99,80 @@ class _MyHomePageState extends State<MyHomePage> {
             builder: (context, appState, _) => Column(children: [
                   SizedBox(height: 400, child: dataList()),
                 ])),
-        Consumer<ApplicationState>(
-            builder: (context, appState, _) => Column(children: [
-                  StyledButton(
-                      child: Text('Add new data'),
-                      onPressed: () {
-                        appState.addData();
-                      })
-                ])),
+        // Consumer<ApplicationState>(
+        //     builder: (context, appState, _) => Column(children: [
+        //           StyledButton(
+        //               child: Text('Add new data'),
+        //               onPressed: () {
+        //                 appState.addData();
+        //               })
+        //         ])),
       ]),
+      floatingActionButton: Consumer<ApplicationState>(
+          builder: (context, appState, _) => FloatingActionButton(
+              tooltip: "Add data",
+              child: const Icon(Icons.add),
+              onPressed: () {
+                addData(appState);
+              })),
     );
+  }
+
+  void addData(appState) {
+    final TextEditingController firstName = TextEditingController();
+    final TextEditingController middleName = TextEditingController();
+    final TextEditingController lastName = TextEditingController();
+    final TextEditingController bDay = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Enter Data'),
+          content: Expanded(
+            child: SingleChildScrollView(
+              child: Column(children: [
+                TextFormField(
+                    controller: firstName,
+                    decoration:
+                        const InputDecoration(helperText: "First Name")),
+                TextFormField(
+                    controller: middleName,
+                    decoration:
+                        const InputDecoration(helperText: "Middle Name")),
+                TextFormField(
+                    controller: lastName,
+                    decoration: const InputDecoration(helperText: "Last Name")),
+                TextFormField(
+                    controller: bDay,
+                    decoration:
+                        const InputDecoration(helperText: "Birth Year")),
+              ]),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    ).then((val) {
+      if (val == "OK") {
+        appState.addData(
+            //making sure there is data here.
+            firstName.text != "" ? firstName.text : "Fred",
+            middleName.text != "" ? middleName.text : "George",
+            lastName.text != "" ? lastName.text : "Flintstone",
+            bDay.text != "" ? int.parse(bDay.text) : -10);
+      }
+    });
+
+// appState.addData();
   }
 }
 
@@ -122,31 +184,9 @@ class ApplicationState extends ChangeNotifier {
   }
 
   Future<void> init() async {
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
 
-    //anonymous authentication
-    /*
-    FirebaseAuth.instance.signInAnonymously().whenComplete(() =>
-        _dataSubscription = FirebaseFirestore.instance
-            .collection('users')
-            .snapshots()
-            .listen((snapshot) {
-          _dataInfos = [];
-          snapshot.docs.forEach((document) {
-            print("value is " + document.data()!['first']);
-
-            _dataInfos.add(
-              dataInfo(
-                first: document.data()!['first'],
-                //middle:  document.data?()['middle']  ,
-                last: document.data()!['last'],
-                born: document.data()!['born'],
-              ),
-            );
-          });
-          notifyListeners();
-        }));
-     */
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
         _loginState = ApplicationLoginState.loggedIn;
@@ -156,18 +196,18 @@ class ApplicationState extends ChangeNotifier {
             .snapshots()
             .listen((snapshot) {
           _dataInfos = [];
-          snapshot.docs.forEach((document) {
-            print("value is " + document.data()!['first']);
+          for (var document in snapshot.docs) {
+            print("value is " + document.data()['first']);
 
             _dataInfos.add(
               dataInfo(
-                first: document.data()!['first'],
-                //middle:  document.data?()['middle']  ,
-                last: document.data()!['last'],
-                born: document.data()!['born'],
+                first: document.data()['first'],
+                middle: document.data()['middle']??"none",
+                last: document.data()['last'],
+                born: document.data()['born'],
               ),
             );
-          });
+          }
           notifyListeners();
         });
       } else {
@@ -183,12 +223,13 @@ class ApplicationState extends ChangeNotifier {
 
   StreamSubscription<QuerySnapshot>? _dataSubscription;
 
-  Future<DocumentReference> addData() {
+  Future<DocumentReference> addData(
+      String first, String middle, String last, int born) {
     return FirebaseFirestore.instance.collection('users').add({
-      'first': "Fred",
-      'last': "Flintstone",
-      'born': -10000,
-      'middle': "George"
+      'first': first,
+      'last': last,
+      'born': born,
+      'middle': middle,
     });
   }
 
@@ -267,23 +308,22 @@ class ApplicationState extends ChangeNotifier {
 class dataInfo {
   dataInfo(
       {required this.first,
-      //   required this.middle,
+      required this.middle,
       required this.last,
       required this.born});
 
   final String first;
-
-  // final String middle;
+  final String middle;
   final String last;
   final int born;
 }
 
 class dataList extends StatefulWidget {
   @override
-  _dataListState createState() => _dataListState();
+  dataListState createState() => dataListState();
 }
 
-class _dataListState extends State<dataList> {
+class dataListState extends State<dataList> {
   @override
   // Modify from here
   Widget build(BuildContext context) {
