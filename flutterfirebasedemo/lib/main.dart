@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text("Fb Firestone example"),
       ),
-      body: ListView(children: <Widget>[
+      body: Column(children: <Widget>[
         Consumer<ApplicationState>(
           builder: (context, appState, _) => Authentication(
             email: appState.email,
@@ -87,26 +87,15 @@ class _MyHomePageState extends State<MyHomePage> {
             signOut: appState.signOut,
           ),
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text(
-              'This is the data:',
-            ),
-          ],
+        const ListTile(
+          title: Text(
+            'This is the data:',
+          ),
+          tileColor: Colors.blue,
         ),
         Consumer<ApplicationState>(
-            builder: (context, appState, _) => Column(children: [
-                  SizedBox(height: 400, child: dataList()),
-                ])),
-        // Consumer<ApplicationState>(
-        //     builder: (context, appState, _) => Column(children: [
-        //           StyledButton(
-        //               child: Text('Add new data'),
-        //               onPressed: () {
-        //                 appState.addData();
-        //               })
-        //         ])),
+          builder: (context, appState, _) => Expanded(child: dataList()),
+        ),
       ]),
       floatingActionButton: Consumer<ApplicationState>(
           builder: (context, appState, _) => FloatingActionButton(
@@ -171,8 +160,6 @@ class _MyHomePageState extends State<MyHomePage> {
             bDay.text != "" ? int.parse(bDay.text) : -10);
       }
     });
-
-// appState.addData();
   }
 }
 
@@ -198,13 +185,15 @@ class ApplicationState extends ChangeNotifier {
           _dataInfos = [];
           for (var document in snapshot.docs) {
             print("value is " + document.data()['first']);
+            print("id is " + document.id);
 
             _dataInfos.add(
               dataInfo(
                 first: document.data()['first'],
-                middle: document.data()['middle']??"none",
+                middle: document.data()['middle'] ?? "none",
                 last: document.data()['last'],
                 born: document.data()['born'],
+                id: document.id,
               ),
             );
           }
@@ -231,6 +220,20 @@ class ApplicationState extends ChangeNotifier {
       'born': born,
       'middle': middle,
     });
+  }
+
+  Future updateData(
+      String id, String first, String middle, String last, int born) {
+    return FirebaseFirestore.instance.collection('users').doc(id).update({
+      'first': first,
+      'last': last,
+      'born': born,
+      'middle': middle,
+    });
+  }
+
+  Future removeData(String id) {
+    return FirebaseFirestore.instance.collection('users').doc(id).delete();
   }
 
   //everything needed for the authentication method
@@ -310,12 +313,14 @@ class dataInfo {
       {required this.first,
       required this.middle,
       required this.last,
-      required this.born});
+      required this.born,
+      required this.id});
 
   final String first;
   final String middle;
   final String last;
   final int born;
+  final String id;
 }
 
 class dataList extends StatefulWidget {
@@ -325,15 +330,89 @@ class dataList extends StatefulWidget {
 
 class dataListState extends State<dataList> {
   @override
-  // Modify from here
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: _dataInfos.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('${_dataInfos[index].last}, ${_dataInfos[index].first}'),
+    return Consumer<ApplicationState>(
+        builder: (context, appState, _) => ListView.builder(
+              itemCount: _dataInfos.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Row(
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          appState.removeData(_dataInfos[index].id);
+                        },
+                        child: const Icon(Icons.delete, color: Colors.red),
+                      ),
+                      Text(
+                          '${_dataInfos[index].last}, ${_dataInfos[index].first}, ${_dataInfos[index].born}'),
+                    ],
+                  ),
+                  onTap: () {updateData(appState, index);},
+                );
+              },
+            ));
+  }
+
+
+  void updateData(appState, int index) {
+    final TextEditingController firstName = TextEditingController();
+    final TextEditingController middleName = TextEditingController();
+    final TextEditingController lastName = TextEditingController();
+    final TextEditingController bYear = TextEditingController();
+
+    firstName.text = _dataInfos[index].first;
+    middleName.text = _dataInfos[index].middle;
+    lastName.text = _dataInfos[index].last;
+    bYear.text =  "${_dataInfos[index].born}";
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Enter Data'),
+          content: Expanded(
+            child: SingleChildScrollView(
+              child: Column(children: [
+                TextFormField(
+                    controller: firstName,
+                    decoration:
+                    const InputDecoration(helperText: "First Name")),
+                TextFormField(
+                    controller: middleName,
+                    decoration:
+                    const InputDecoration(helperText: "Middle Name")),
+                TextFormField(
+                    controller: lastName,
+                    decoration: const InputDecoration(helperText: "Last Name")),
+                TextFormField(
+                    controller: bYear,
+                    decoration:
+                    const InputDecoration(helperText: "Birth Year")),
+              ]),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
         );
       },
-    );
+    ).then((val) {
+      if (val == "OK") {
+        appState.updateData(
+          _dataInfos[index].id,
+            firstName.text != "" ? firstName.text : "Fred",
+            middleName.text != "" ? middleName.text : "George",
+            lastName.text != "" ? lastName.text : "Flintstone",
+            bYear.text != "" ? int.parse(bYear.text) : -10);
+      }
+    });
   }
 }
