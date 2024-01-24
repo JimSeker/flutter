@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'src/authentication.dart';
-import 'src/widgets.dart';
 
 /// note, flutter is using a default of min of 16, required min is 21.  changed
 /// manually in the android build.gradle file to 24.
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           future: _fbapp,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              print('You have an error! ${snapshot.error.toString()}');
+              log('You have an error! ${snapshot.error.toString()}');
               return const Text('Something went wrong!');
             } else if (snapshot.hasData) {
               return const MyHomePage(
@@ -184,8 +184,8 @@ class ApplicationState extends ChangeNotifier {
             .listen((snapshot) {
           _dataInfos = [];
           for (var document in snapshot.docs) {
-            print("value is " + document.data()['first']);
-            print("id is " + document.id);
+            log("value is " + document.data()['first']);
+            log("id is ${document.id}");
 
             _dataInfos.add(
               dataInfo(
