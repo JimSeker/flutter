@@ -39,7 +39,7 @@ class TestDrawer extends StatelessWidget {
               ),
             ],
           ),
-        );
+        )
     );
   }
 
