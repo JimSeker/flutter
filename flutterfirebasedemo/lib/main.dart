@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
           tileColor: Colors.blue,
         ),
         Consumer<ApplicationState>(
-          builder: (context, appState, _) => Expanded(child: dataList()),
+          builder: (context, appState, _) => const Expanded(child: dataList()),
         ),
       ]),
       floatingActionButton: Consumer<ApplicationState>(
@@ -324,6 +324,8 @@ class dataInfo {
 }
 
 class dataList extends StatefulWidget {
+  const dataList({super.key});
+
   @override
   dataListState createState() => dataListState();
 }
