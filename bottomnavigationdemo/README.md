@@ -1,6 +1,6 @@
 # bottomnavigationdemo
 
-Bottom Navigation Demo
+A new Flutter project.
 
 ## Getting Started
 
