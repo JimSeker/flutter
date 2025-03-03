@@ -1,6 +1,6 @@
 # dialog_demo
 
-Dialog Demo.
+Dialog Demo
 
 ## Getting Started
 

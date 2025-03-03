@@ -1,6 +1,6 @@
 # draw_demo
 
-a Draw Demo
+Draw Demo example.
 
 ## Getting Started
 

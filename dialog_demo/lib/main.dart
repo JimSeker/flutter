@@ -99,13 +99,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   showDialog(
                       context: context,
                       builder: (context) => DialogExample(
-                            onConfirm: (String one, String two) {
-                              setState(() {
-                                input1 = one;
-                                input2 = two;
-                              });
-                            },
-                          ));
+                        onConfirm: (String one, String two) {
+                          setState(() {
+                            input1 = one;
+                            input2 = two;
+                          });
+                        },
+                      ));
                   // so now set it in a setState so widget updates.
                 },
                 child: const Text('Slider dialog')),
@@ -159,9 +159,9 @@ class _MyHomePageState extends State<MyHomePage> {
           return dialog;
         });
     futureValue.then((language) => {
-          setState(() {
-            selectedLanguage = language;
-          })
-        });
+      setState(() {
+        selectedLanguage = language;
+      })
+    });
   }
 }
