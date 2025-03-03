@@ -1,6 +1,6 @@
 # form_example
 
-form example project
+A new Flutter project.
 
 ## Getting Started
 
