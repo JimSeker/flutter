@@ -1,6 +1,6 @@
 # fab_demo
 
-FAB demo
+fab demo
 
 ## Getting Started
 

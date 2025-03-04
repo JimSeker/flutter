@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /*
  * simple app to show state and the FAB
  *
- * This also changes some of the theme for colors.  backgroundcolor doesn't seem to work.
+ * This also changes some of the theme for colors.  background color doesn't seem to work.
  *
  */
 

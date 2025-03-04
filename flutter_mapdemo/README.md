@@ -1,6 +1,6 @@
 # flutter_mapdemo
 
-Flutter map Demo
+Flutter Map Demo
 
 ## Getting Started
 
