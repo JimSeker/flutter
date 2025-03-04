@@ -1,6 +1,6 @@
-# httpddemo
+# httpdemo
 
-http demo
+HTTP demo
 
 ## Getting Started
 

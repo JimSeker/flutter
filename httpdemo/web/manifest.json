@@ -1,11 +1,11 @@
 {
-    "name": "httpddemo",
-    "short_name": "httpddemo",
+    "name": "httpdemo",
+    "short_name": "httpdemo",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "http demo",
+    "description": "HTTP demo",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

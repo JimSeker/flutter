@@ -1,6 +1,6 @@
 # more_widgets_demo
 
-more widets demos
+More Widgets demo
 
 ## Getting Started
 

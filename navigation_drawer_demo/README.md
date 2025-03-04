@@ -1,6 +1,6 @@
 # navigation_drawer_demo
 
-navigation drawer demo.
+Nav Drawer Demo
 
 ## Getting Started
 
