@@ -12,6 +12,8 @@ import 'src/authentication.dart';
 
 /// note, flutter is using a default of min of 16, required min is 21.  changed
 /// manually in the android build.gradle file to 24.
+///
+//a few problems with the list isn't scrolling correctly. 
 
 Future<void> main() async {
   runApp(ChangeNotifierProvider(
@@ -185,14 +187,15 @@ class ApplicationState extends ChangeNotifier {
           _dataInfos = [];
           for (var document in snapshot.docs) {
             log("value is " + document.data()['first']);
+            log(document.data()['born'].toString());
             log("id is ${document.id}");
-
+            int bornint = document.data()['born'];  //something isn't being cast correctly and errors saying it's string.
             _dataInfos.add(
               dataInfo(
                 first: document.data()['first'],
                 middle: document.data()['middle'] ?? "none",
                 last: document.data()['last'],
-                born: document.data()['born'],
+                born: bornint, //document.data()['born'],
                 id: document.id,
               ),
             );

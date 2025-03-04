@@ -1,6 +1,6 @@
 # flutterfirebasedemo
 
-A new Flutter project.
+Flutter Firebase Demo.
 
 ## Getting Started
 
