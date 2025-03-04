@@ -1,6 +1,6 @@
 # tcp_demo
 
-TCP server and client example
+TCP Demo
 
 ## Getting Started
 

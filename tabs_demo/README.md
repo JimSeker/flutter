@@ -1,6 +1,6 @@
 # tabs_demo
 
-A new Flutter project.
+Tabs Demo
 
 ## Getting Started
 

@@ -34,7 +34,7 @@ class HighScore {
   //  when using the print statement.
   @override
   String toString() {
-    return 'id: $id, name: $name, age: $score';
+    return 'id: $id, name: $name, score: $score';
   }
 }
 

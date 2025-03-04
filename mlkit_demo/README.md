@@ -1,6 +1,6 @@
 # mlkit_demo
 
-A new Flutter project.
+ML kit demo
 
 ## Getting Started
 

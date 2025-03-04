@@ -1,6 +1,6 @@
 # take_pic_demo
 
-Use ImagePicker to take a picture.
+Take a picture demo
 
 ## Getting Started
 
