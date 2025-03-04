@@ -1,6 +1,6 @@
 # speech_demo
 
-speech to text and text to speech
+Speech Demo
 
 ## Getting Started
 

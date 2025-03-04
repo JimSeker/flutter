@@ -49,14 +49,15 @@ class TextToSpeechState extends State<TextToSpeech> {
       });
     });
 
-    if (isAndroid) {
-      flutterTts.setInitHandler(() {
-        setState(() {
-          developer.log("TTS Initialized");
-          message += "TTS Initialized\n";
-        });
-      });
-    }
+    //no longer needed code.
+    // if (isAndroid) {
+    //   flutterTts.setInitHandler(() {
+    //     setState(() {
+    //       developer.log("TTS Initialized");
+    //       message += "TTS Initialized\n";
+    //     });
+    //   });
+    // }
 
     flutterTts.setCompletionHandler(() {
       setState(() {

@@ -1,6 +1,6 @@
 # sensor_plugin_demo
 
-example of how to use sensor plugin.
+Sensor plugin
 
 ## Getting Started
 

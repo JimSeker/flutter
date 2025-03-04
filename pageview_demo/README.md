@@ -1,6 +1,6 @@
 # pageview_demo
 
-A new Flutter project.
+Page View Demo
 
 ## Getting Started
 
