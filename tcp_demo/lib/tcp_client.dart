@@ -51,38 +51,41 @@ class MyConnectionState extends State<MyConnection> {
         connected = true;
       });
       developer.log(
-          'Connected to: ${socket.remoteAddress.address}:${socket.remotePort}');
+        'Connected to: ${socket.remoteAddress.address}:${socket.remotePort}',
+      );
 
-      _streamSubscriptions.add(socket.listen(
-        // handle data from the server
-        (data) {
-          final serverResponse = String.fromCharCodes(data);
-          developer.log('Server: $serverResponse');
-          setState(() {
-            message += "$serverResponse \n";
-          });
-        },
+      _streamSubscriptions.add(
+        socket.listen(
+          // handle data from the server
+          (data) {
+            final serverResponse = String.fromCharCodes(data);
+            developer.log('Server: $serverResponse');
+            setState(() {
+              message += "$serverResponse \n";
+            });
+          },
 
-        // handle errors
-        onError: (error) {
-          developer.log(error);
-          socket.destroy();
-          setState(() {
-            message += "ERROR\n";
-            connected = false;
-          });
-        },
+          // handle errors
+          onError: (error) {
+            developer.log(error);
+            socket.destroy();
+            setState(() {
+              message += "ERROR\n";
+              connected = false;
+            });
+          },
 
-        // handle server ending connection
-        onDone: () {
-          developer.log('Server left.');
-          setState(() {
-            connected = false;
-            message += "Server closed the connection\n";
-          });
-          socket.destroy();
-        },
-      ));
+          // handle server ending connection
+          onDone: () {
+            developer.log('Server left.');
+            setState(() {
+              connected = false;
+              message += "Server closed the connection\n";
+            });
+            socket.destroy();
+          },
+        ),
+      );
       sendMessage("Hi from Flutter client");
     } on SocketException catch (error) {
       developer.log("SocketException", error: error);
@@ -111,37 +114,45 @@ class MyConnectionState extends State<MyConnection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: (connected)
-            ? Column(
+      body:
+          (connected)
+              ? Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextField(
-                      controller: msg,
-                      decoration: const InputDecoration(
-                          helperText: "Enter message to send")),
+                    controller: msg,
+                    decoration: const InputDecoration(
+                      helperText: "Enter message to send",
+                    ),
+                  ),
                   TextButton(onPressed: send, child: const Text('Send')),
                   TextButton(
-                      onPressed: closeConnection, child: const Text('close')),
+                    onPressed: closeConnection,
+                    child: const Text('close'),
+                  ),
                   Text("Logger:\n $message"),
                 ],
               )
-            : Column(
+              : Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextField(
-                      controller: name,
-                      decoration:
-                          const InputDecoration(helperText: "Enter Name")),
+                    controller: name,
+                    decoration: const InputDecoration(helperText: "Enter Name"),
+                  ),
                   TextField(
-                      controller: port,
-                      decoration:
-                          const InputDecoration(helperText: "Enter port")),
+                    controller: port,
+                    decoration: const InputDecoration(helperText: "Enter port"),
+                  ),
                   TextButton(
-                      onPressed: startConnection, child: const Text('connect')),
+                    onPressed: startConnection,
+                    child: const Text('connect'),
+                  ),
                   Text("logger:\n $message"),
                 ],
-              ));
+              ),
+    );
   }
 }
