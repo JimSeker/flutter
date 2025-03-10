@@ -114,7 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
         itemCount: values.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(values[index]),
+            title:  Card(
+              child: SizedBox(width: 300, height: 100,
+                  child: Center(child: Text(values[index])))
+            ),
             onTap: () {
               _ontap(values[index]);
             },
