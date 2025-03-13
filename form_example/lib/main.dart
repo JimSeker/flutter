@@ -13,7 +13,18 @@ class MyApp extends StatefulWidget {
 //class MyApp extends StatelessWidget {
 class MyAppState extends State<MyApp> {
   // This widget is the root of your application.
-  TextEditingController nameController = TextEditingController();
+  late TextEditingController nameController;
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    super.dispose();
+  }
   int _radioValue = 0;
 
   void _handleRadioValueChange(int? value) {
