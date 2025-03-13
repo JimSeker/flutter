@@ -4,6 +4,10 @@ These are examples very basic examples using flutter.  Note, I'm in the process 
 
 `bottomnavigationdemo` sets the basics to get the bottom navigation working.
 
+`CupertinoDemo` and `amterialdesigndemo` use all the same widget, but cupertino is IOS and material is "android" versions to show the different between them.
+
+`moreui` is a demo of menus (with menuAnchors), chips, validing textFields and textFormFields, plus badges.
+
 `dialog_Demo` is an example of several dialog boxes.
 
 `draw_Demo` show customPaint, gestureDectector, bottomnavigationbar, with dialogs and colorpicker dialog.
