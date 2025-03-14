@@ -8,6 +8,8 @@ These are examples very basic examples using flutter.  Note, I'm in the process 
 
 `moreui` is a demo of menus (with menuAnchors), chips, validing textFields and textFormFields, plus badges.
 
+`ScreenDataDemo` shows to pass data to a second route and how to return data to calling route.
+
 `dialog_Demo` is an example of several dialog boxes.
 
 `draw_Demo` show customPaint, gestureDectector, bottomnavigationbar, with dialogs and colorpicker dialog.
