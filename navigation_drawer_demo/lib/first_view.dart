@@ -17,7 +17,7 @@ class FirstView extends StatelessWidget {
           child: Text('Welcome To First View'),
         ),
       ),
-      drawer: const DrawerWidget(),
+      drawer: const DrawerWidget(screen: 0),
     );
   }
 }

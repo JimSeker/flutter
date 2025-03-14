@@ -17,7 +17,7 @@ class SecondView extends StatelessWidget {
           child: Text('Welcome To Second View'),
         ),
       ),
-      drawer: const DrawerWidget(),
+      drawer: const DrawerWidget(screen: 1,),
     );
   }
 }

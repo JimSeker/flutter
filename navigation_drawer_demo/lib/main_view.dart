@@ -17,7 +17,8 @@ class MainView extends StatelessWidget {
           child: Text('Welcome To Main View'),
         ),
       ),
-      drawer: const DrawerWidget(),
+     //endDrawer:  const DrawerWidget(),
+      drawer: const DrawerWidget(screen: 3),
     );
   }
 }

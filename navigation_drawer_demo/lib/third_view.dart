@@ -17,7 +17,7 @@ class ThirdView extends StatelessWidget {
           child: Text('Welcome To Third View'),
         ),
       ),
-      drawer: const DrawerWidget(),
+      drawer: const DrawerWidget(screen: 2,),
     );
   }
 }
