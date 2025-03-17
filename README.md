@@ -2,6 +2,8 @@ flutter Examples
 ===========
 `routes/` is all the example dealing with navigation, screens, and/or routes.
 
+`bottomappbar_demo` shows to create the appbar but at the bottom with a fab as well.
+
 `CupertinoDemo` and `amterialdesigndemo` use all the same widget, but cupertino is IOS and material is "android" versions to show the different between them.
 
 `moreui` is a demo of menus (with menuAnchors), chips, validing textFields and textFormFields, plus badges.
