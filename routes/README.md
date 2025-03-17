@@ -7,6 +7,8 @@ flutter Examples navigation/route demos
 
 `navigationbar_demo` sets the basics to get the bottom navigation working.
 
+`navigationbar_rail_demo` show setup for screen width and use either the rail or bar.
+
 `pageview_demo` uses a pageview that allows the users to swipe between 5 pages. note, swipe is broken on web/chrome. 
 
 `rail_demo` show how create a RailNavigation widget.
