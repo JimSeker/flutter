@@ -10,6 +10,7 @@ class FirstView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('First View'),
       ),
       body: const SafeArea(
@@ -17,7 +18,7 @@ class FirstView extends StatelessWidget {
           child: Text('Welcome To First View'),
         ),
       ),
-      drawer: const DrawerWidget(screen: 0),
+      endDrawer: const DrawerWidget(screen: 0),
     );
   }
 }

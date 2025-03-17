@@ -10,8 +10,7 @@ class DrawerWidget extends StatefulWidget {
 
 class DrawerWidgetState extends State<DrawerWidget> {
    DrawerWidgetState({required this.screenIndex});
-  int screenIndex;  //currently this is not working correctly
-                        //so it's ignored in the drawer, set to null.
+  int screenIndex;
 
   void handleScreenChanged(int selectedScreen) {
     if (selectedScreen == 0) {

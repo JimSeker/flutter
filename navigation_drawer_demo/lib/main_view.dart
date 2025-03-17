@@ -10,6 +10,7 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Main View'),
       ),
       body: const SafeArea(
