@@ -1,14 +1,10 @@
 flutter Examples
 ===========
-These are examples very basic examples using flutter.  Note, I'm in the process of updating them the new versions.  some may not even compile. 
-
-`bottomnavigationdemo` sets the basics to get the bottom navigation working.
+`routes/` is all the example dealing with navigation, screens, and/or routes.
 
 `CupertinoDemo` and `amterialdesigndemo` use all the same widget, but cupertino is IOS and material is "android" versions to show the different between them.
 
 `moreui` is a demo of menus (with menuAnchors), chips, validing textFields and textFormFields, plus badges.
-
-`ScreenDataDemo` shows to pass data to a second route and how to return data to calling route.
 
 `dialog_Demo` is an example of several dialog boxes.
 
@@ -30,19 +26,11 @@ These are examples very basic examples using flutter.  Note, I'm in the process 
 
 `more_widgets_demo` Show how to use some more input widget and "small" static listview with a snackbar as well.
 
-`multiscreendemo` shows how to switch between two screens. 
-
-`navigation_drawer_demo` uses a drawer to change to 3 different screens. 
-
-`pageview_demo` uses a pageview that allows the users to swipe between 5 pages. note, swipe is broken on web/chrome. 
-
 `sensor_plugin_demo` uses the sensor_plugin and the battery_plus plugin to shows the battery level, accelerometer, gyroscope, user accelerometer (does have basic gravity included), and magnetometer values. 
 
 `speech_demo` uses two plugins, flutter_tts for text to speech, and speech_to_text for speech to text recognization.   this is a very basic demo, but shows how both work.
 
 `sqlitedb_demo` uses sqflite (sqlite) to rework the database example [sqliteDBDemo in saveData Repo](https://github.com/JimSeker/saveData)  (note fails on web, can't store db in a browser I guess).
-
-`tabs_demo` uses  Tabview controller  that allows the users to switch between 5 pages,, either by clicking the tab or swipe. note, swipe is broken on web/chrome.
 
 `take_pic_demo` show how to get picture from the gallery or camera and display it. 
 
