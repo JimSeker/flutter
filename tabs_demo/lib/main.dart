@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Tab demo Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
       darkTheme: ThemeData.dark(),
       home: const MyHomePage(title: 'Tabs demo Page'),
@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
@@ -33,15 +34,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-
         appBar: AppBar(
-          bottom:  TabBar(
+          bottom: TabBar(
+
             // isScrollable: true,
             tabs: [
               Tab(icon: Icon(Icons.flight)),
@@ -51,9 +51,10 @@ class _MyHomePageState extends State<MyHomePage> {
               Tab(icon: Icon(Icons.directions_car)),
             ],
           ),
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body:  TabBarView(
+        body: TabBarView(
           children: [
             Icon(Icons.flight, size: 350),
             Icon(Icons.directions_bike, size: 350),
