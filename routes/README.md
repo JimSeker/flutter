@@ -1,11 +1,11 @@
 flutter Examples navigation/route demos
 ===========
 
-`bottomnavigationdemo` sets the basics to get the bottom navigation working.
-
 `multiscreendemo` shows how to switch between two screens. 
 
 `navigation_drawer_demo` uses a drawer to change to 3 different screens. 
+
+`navigationbar_demo` sets the basics to get the bottom navigation working.
 
 `pageview_demo` uses a pageview that allows the users to swipe between 5 pages. note, swipe is broken on web/chrome. 
 
