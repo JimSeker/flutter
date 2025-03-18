@@ -22,6 +22,8 @@ flutter Examples
 
 `httpdemo` is the basic example that flutter demos network with. 
 
+`keyboard_demo` is simple example to capture key strokes in card.
+
 `listview_demo` is an example of using a listview, dialogbox and addig to the list.
 
 `mlkit_demo` show how to use the mlkit face with a still frame picture either camera or gallery. 
