@@ -20,6 +20,8 @@ flutter Examples
 
 `form_example` is an attempt to redo the formexample in [formexample in basic](https://github.com/JimSeker/ui/tree/master/Basic)
 
+`gamepad_demo` uses the gamepad plugin (which is still beta and API may happen), using there example code. works great for android and windows 11.
+
 `httpdemo` is the basic example that flutter demos network with. 
 
 `keyboard_demo` is simple example to capture key strokes in card.
