@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Dialog Demo'),
     );
   }
 }
@@ -40,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
       body: Center(
@@ -109,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   // so now set it in a setState so widget updates.
                 },
                 child: const Text('Slider dialog')),
-            Text("Selected langage is $selectedLanguage")
+            Text("Selected language is $selectedLanguage")
           ],
         ),
       ),
