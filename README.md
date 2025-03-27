@@ -32,13 +32,19 @@ flutter Examples
 
 `more_widgets_demo` Show how to use some more input widget and "small" static listview with a snackbar as well.
 
+`moreui` more on textfield vs textFormField and chip, menus, icons, and dividers
+
+` persistenace_demo` shows share preference plugin and the reading/write files
+
 `sensor_plugin_demo` uses the sensor_plugin and the battery_plus plugin to shows the battery level, accelerometer, gyroscope, user accelerometer (does have basic gravity included), and magnetometer values. 
 
 `speech_demo` uses two plugins, flutter_tts for text to speech, and speech_to_text for speech to text recognization.   this is a very basic demo, but shows how both work.
 
 `sqlitedb_demo` uses sqflite (sqlite) to rework the database example [sqliteDBDemo in saveData Repo](https://github.com/JimSeker/saveData)  (note fails on web, can't store db in a browser I guess).
 
-`take_pic_demo` show how to get picture from the gallery or camera and display it. 
+`take_pic_demo` show how to get picture from the gallery or camera and display it.  uses a plugin. 
+
+`cameracontroller_demo` is flutter native code from their site.  It doesn't work very well, but does work on android.  sort of web, not at all on windows.
 
 `tcp_demo` Shows how to use a socket and serversocket.  setups a simple connection, and then allows the user to send and receiver messages.  If run on two different phones/emulators the app can talk to each other.  Uses a bottomnavigationbar to setup 2 separate "widgets" one for the server, the other for a client.
 
