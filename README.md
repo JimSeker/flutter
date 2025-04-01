@@ -48,6 +48,8 @@ flutter Examples
 
 `tcp_demo` Shows how to use a socket and serversocket.  setups a simple connection, and then allows the user to send and receiver messages.  If run on two different phones/emulators the app can talk to each other.  Uses a bottomnavigationbar to setup 2 separate "widgets" one for the server, the other for a client.
 
+`httprestdemo` is front end app that reads from a backend server written in node.js [here](https://github.com/JimSeker/nodejs/tree/main/lecture8)
+
 ---
 
 These are example code for University of Wyoming, Cosc 4730 Mobile Programming course and cosc 4735 Advance Mobile Programing course. 
