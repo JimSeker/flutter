@@ -1,6 +1,5 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
 
 class HighScore {
   int id;
@@ -52,8 +51,8 @@ class DatabaseHelper {
 
   // this opens the database (and creates it if it doesn't exist)
   Future<void> init() async {
-    final documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, _databaseName);
+    final documentsDirectory = await getDatabasesPath();
+    final path = join(documentsDirectory, _databaseName);
     _db = await openDatabase(
       path,
       version: _databaseVersion,
@@ -96,7 +95,7 @@ class DatabaseHelper {
       print(row.toString());
     }
 
-// Convert the List<Map<String, dynamic> into a List<Dog>.
+// Convert the List<Map<String, dynamic> into a List<HighScore>.
     return List.generate(maps.length, (i) {
       return HighScore(
         id: maps[i][columnId] ?? 0,

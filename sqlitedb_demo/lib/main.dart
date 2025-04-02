@@ -9,8 +9,6 @@ import 'highscore.dart';
 // Here we are using a global variable. You can use something like
 // get_it in a production app.
 final dbHelper = DatabaseHelper();
-//I'd prefer it not global, but can't find a better way.
-///late List<HighScore> myList;
 
 void main() async {
   // Avoid errors caused by flutter upgrade.
@@ -18,23 +16,21 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // initialize the database
   await dbHelper.init();
-  // myList = await dbHelper
-  //     .queryAllRows(); //not sure if that is the correct way to do this, but I need list initialized for the listview.
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'DB Example wth sqflite'),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -74,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
       body: ListView.builder(
@@ -81,7 +78,13 @@ class _MyHomePageState extends State<MyHomePage> {
         //just in case the future hasn't returned yet.
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(myList![index].toString()),
+            title: Card(
+              child: SizedBox(
+                width: 300,
+                height: 100,
+                child: Center(child: Text(myList![index].toString())),
+              ),
+            ),
             onTap: () {
               _ontap(myList![index]);
             },
@@ -102,91 +105,97 @@ class _MyHomePageState extends State<MyHomePage> {
     nameController.text = item.name;
     scoreController.text = item.score.toString();
     showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-              title: const Text("Update data"),
-              content: Column(children: [
-                TextFormField(
-                  controller: nameController,
-                ),
-                TextFormField(
-                  controller: scoreController,
-                )
-              ]),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: const Text('Delete'),
-                  onPressed: () {
-                    _delete(item.id);
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: const Text('Update'),
-                  onPressed: () {
-                    item.score = int.parse(scoreController.text);
-                    item.name = nameController.text;
-                    _update(item);
-                    Navigator.of(context).pop();
-                  },
-                ),
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text("Update data"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(controller: nameController),
+                TextFormField(controller: scoreController),
               ],
-            ));
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Delete'),
+                onPressed: () {
+                  _delete(item.id);
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Update'),
+                onPressed: () {
+                  item.score = int.parse(scoreController.text);
+                  item.name = nameController.text;
+                  _update(item);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+    );
   }
 
   void insert() {
     final TextEditingController nameController = TextEditingController();
     final TextEditingController scoreController = TextEditingController();
     showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-              title: const Text("Add data"),
-              content: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    TextFormField(
-                      decoration:
-                          const InputDecoration(hintText: "Enter name here"),
-                      controller: nameController,
-                    ),
-                    TextFormField(
-                      decoration:
-                          const InputDecoration(hintText: "Enter Score here"),
-                      controller: scoreController,
-                    )
-                  ]),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text("Add data"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: "Enter name here",
+                  ),
+                  controller: nameController,
                 ),
-                TextButton(
-                  child: const Text('Add'),
-                  onPressed: () {
-                    HighScore row = HighScore(
-                        id: -1,
-                        name: nameController.text,
-                        score: int.parse(scoreController.text));
-                    _insert(row);
-                    Navigator.of(context).pop();
-                  },
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: "Enter Score here",
+                  ),
+                  controller: scoreController,
                 ),
               ],
-            ));
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Add'),
+                onPressed: () {
+                  HighScore row = HighScore(
+                    id: -1,
+                    name: nameController.text,
+                    score: int.parse(scoreController.text),
+                  );
+                  _insert(row);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+    );
   }
 
   void _insert(HighScore row) async {
     // row to insert id should be ignored, so -1 is okay.
     //HighScore row = HighScore(id:-1, name: 'Jim', score:3012);
-
     final id = await dbHelper.insert(row);
     debugPrint('inserted row id: $id');
     _query().then((values) {
