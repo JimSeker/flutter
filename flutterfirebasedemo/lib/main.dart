@@ -156,13 +156,10 @@ class _MyHomePageState extends State<MyHomePage> {
           .collection('users')
           .snapshots()
           .listen((snapshot) {
+            //first clear the data structure
+            _dataInfos = [];
             setState(() {
-              //first clear the data structure, and which clears the UI.
-              _dataInfos = [];
-            });
-
-            setState(() {
-              //update the data structure, and which updates the UI.
+              //add everything to the data structure, and which updates the UI.
               for (var document in snapshot.docs) {
                 log("value is " + document.data()['first']);
                 log(document.data()['born'].toString());
