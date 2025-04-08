@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -43,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
+   
     setState(() {
       _markers.clear();
       Marker laramieMarker = const Marker(
@@ -65,8 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Flutter Maps Demo'),
-          backgroundColor: Colors.green[700],
+          title: Text(widget.title),
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
