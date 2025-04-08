@@ -22,6 +22,8 @@ flutter Examples
 
 `gamepad_demo` uses the gamepad plugin (which is still beta and API may happen), using there example code. works great for android and windows 11.
 
+`google_ads_demo`, shows how create a bottom banner ad and interstitial ad.  It uses google's test Ads IDs.
+
 `httpdemo` is the basic example that flutter demos network with. 
 
 `keyboard_demo` is simple example to capture key strokes in card.
