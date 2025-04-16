@@ -1,5 +1,8 @@
 flutter Examples
 ===========
+
+`AudioVideo` is examples dealing with playing audio, video and currently webview too.
+
 `routes/` is all the example dealing with navigation, screens, and/or routes.
 
 `bottomappbar_demo` shows to create the appbar but at the bottom with a fab as well.
