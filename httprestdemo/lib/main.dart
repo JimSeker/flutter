@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -60,9 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemCount: snapshot.data!.scores.length,
                 itemBuilder: (context, index) {
                   return Dismissible(
-                  key: Key(snapshot.data!.scores[index].name),
+                  key: Key(snapshot.data!.scores[index].id.toString()),
                   onDismissed: (direction) {
-                    deleteScore(snapshot.data!.scores[index].name);
+                    deleteScore(snapshot.data!.scores[index].id);
                     //we need to run set state and clean up the UI, even thought
                     //the data is going to update, because no await above.
                     setState(() {
@@ -74,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: const Icon(Icons.delete),
                   ),
                   child: ListTile(
-                    onTap: () {_displayTextInputDialogUpdate(context, snapshot.data!.scores[index].name, snapshot.data!.scores[index].score);}, //updated score, call dialog.
+                    onTap: () {_displayTextInputDialogUpdate(context, snapshot.data!.scores[index].id, snapshot.data!.scores[index].name, snapshot.data!.scores[index].score);}, //updated score, call dialog.
                     title: Card(
                       child: SizedBox(
                         width: 300,
@@ -82,6 +83,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+                            Text(
+                              snapshot.data!.scores[index].id.toString()
+                            ),
                             Text(
                               snapshot.data!.scores[index].name
                             ),
@@ -119,9 +123,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   //this function is used to delete a name and score from the server.
-  Future<void> deleteScore(String name) async {
+  Future<void> deleteScore(int id) async {
     final response = await http.delete(
-      Uri.parse('http://wardpi.eecs.uwyo.edu:3000/api/scores/$name'),
+      Uri.parse('http://wardpi.eecs.uwyo.edu:3000/api/scores/$id'),
     );
     //response.body would hold the return information from the server.
     if (response.statusCode != 200) {
@@ -202,8 +206,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // dialog to update the score for a name.
-  void _displayTextInputDialogUpdate(BuildContext context, String name, int score) {
-    TextEditingController textFieldController = TextEditingController();
+  void _displayTextInputDialogUpdate(BuildContext context, int id, String name, int score) {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController scoreController = TextEditingController();
+    nameController.text = name;
+    scoreController.text = score.toString();
 
     showDialog(
       context: context,
@@ -214,11 +221,15 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                name,
+                id.toString(),
                 style: const TextStyle(fontSize: 20),
               ),
               TextField(
-                controller: textFieldController,
+                controller: nameController,
+                decoration: const InputDecoration(hintText: "Enter your Name"),
+              ),
+              TextField(
+                controller: scoreController,
                 decoration: const InputDecoration(hintText: "Enter your score"),
               ),
             ],
@@ -234,8 +245,8 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text('Submit'),
               onPressed: () {
                 //add the score to the server.
-                log("updating score for $name to ${textFieldController.text}");
-                updateScore(name, int.parse(textFieldController.text)).then(
+                log("updating score for $name to ${nameController.text}");
+                updateScore(id, nameController.text, int.parse(scoreController.text)).then(
                     (value) {
                       //call the fetchScore function to update the data.
                       setState(() {
@@ -254,10 +265,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // this function is used to update the score for a name.
-  Future<void> updateScore(String name, int score) async {
+  Future<void> updateScore(int id, String name, int score) async {
     final response = await http.put(
-      Uri.parse('http://wardpi.eecs.uwyo.edu:3000/api/scores/$name'),
-      body: {'score': score.toString()},
+      Uri.parse('http://wardpi.eecs.uwyo.edu:3000/api/scores/$id'),
+      body: { 'name': name,
+              'score': score.toString()},
     );
     //response.body would hold the return information from the server.
     if (response.statusCode >= 300) {
@@ -294,12 +306,13 @@ class DataReturned {
 }
 
 class Score {
+  final int id;
   final String name;
   final int score;
 
-  Score({required this.name, required this.score});
+  Score({required this.id, required this.name, required this.score});
 
   factory Score.fromJson(Map<String, dynamic> json) {
-    return Score(name: json['name'], score: json['score']);
+    return Score(id: json['id'], name: json['name'], score: json['score']);
   }
 }
