@@ -50,7 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: FutureBuilder(
+      body:
+      RefreshIndicator(
+          child: FutureBuilder(
         future: futureData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -113,7 +115,10 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         },
       ),
-
+        onRefresh: () { setState(() {
+          futureData = fetchScore();
+        }); return futureData; },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {_displayTextInputDialog(context);},
         tooltip: 'Increment',
