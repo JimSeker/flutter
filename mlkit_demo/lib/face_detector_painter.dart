@@ -19,6 +19,12 @@ class FaceDetectorPainter extends CustomPainter {
       ..strokeWidth = 1.0
       ..color = Colors.red;
 
+    final Paint paintBlue = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0
+      ..color = Colors.blue;
+
+
     for (final Face face in faces) {
       canvas.drawRect(
         Rect.fromLTRB(
@@ -33,6 +39,7 @@ class FaceDetectorPainter extends CustomPainter {
 
       void paintContour(FaceContourType type) {
         final faceContour = face.contours[type];
+
         if (faceContour?.points != null) {
           for (final Point point in faceContour!.points) {
             canvas.drawCircle(
@@ -63,6 +70,40 @@ class FaceDetectorPainter extends CustomPainter {
       paintContour(FaceContourType.noseBottom);
       paintContour(FaceContourType.leftCheek);
       paintContour(FaceContourType.rightCheek);
+
+
+      void paintLandMarks(FaceLandmarkType type) {
+        final faceLandmark = face.landmarks[type];
+        if (faceLandmark != null) {
+          canvas.drawCircle(
+            Offset(
+              translateX(
+                  faceLandmark.position.x.toDouble(),
+                  rotation,
+                  size,
+                  absoluteImageSize),
+              translateY(
+                  faceLandmark.position.y.toDouble(),
+                  rotation,
+                  size,
+                  absoluteImageSize),
+            ),
+            3,
+            paintBlue,
+          );
+        }
+      }
+
+      paintLandMarks(FaceLandmarkType.leftEar);
+      paintLandMarks(FaceLandmarkType.rightEar);
+      paintLandMarks(FaceLandmarkType.leftMouth);
+      paintLandMarks(FaceLandmarkType.rightMouth);
+      paintLandMarks(FaceLandmarkType.bottomMouth);
+      paintLandMarks(FaceLandmarkType.noseBase);
+      paintLandMarks(FaceLandmarkType.leftCheek);
+      paintLandMarks(FaceLandmarkType.rightCheek);
+      paintLandMarks(FaceLandmarkType.leftEye);
+      paintLandMarks(FaceLandmarkType.rightEye);
     }
   }
 

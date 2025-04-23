@@ -7,7 +7,8 @@ plugins {
 
 android {
     namespace = "edu.cs4730.mlkit_demo"
-    compileSdk = flutter.compileSdkVersion
+    //compileSdk = flutter.compileSdkVersion
+    compileSdk = 35
     //ndkVersion = flutter.ndkVersion
     ndkVersion = "27.0.12077973"
     compileOptions {
@@ -24,8 +25,10 @@ android {
         applicationId = "edu.cs4730.mlkit_demo"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        //minSdk = flutter.minSdkVersion
+        minSdk = 24
+        //targetSdk = flutter.targetSdkVersion
+        targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

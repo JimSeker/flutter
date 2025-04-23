@@ -5,8 +5,10 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:image/image.dart' as image;
 
 /// note in the android/app/build.gradle min sdk is hard set to 24, since flutter is using 16! for dumb reason and mlKit won't support it.
 /// do we need to edit the androidmanifext.xml and vision dependencies?
@@ -52,12 +54,35 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final ImagePicker _picker = ImagePicker();
   XFile? photo = null;
-  ui.Image? image;
+  ui.Image? myImage;
   List<Face> faces = [];
   late InputImage inputImageG;
+  // add any more image declarations here.
+  late ui.Image duck;
+
+  String information = "Not Ready";
+
+  @override
+  initState() {
+    super.initState();
+     loadImages();
+
+  }
+
+  //load all the images here from assets, once they are all loaded the app
+  // will be ready to take a picture and then process it.
+  Future<void> loadImages() async {
+    duck = await getUiImage("assets/duck128.png", 128,128) ;
+    setState(() {
+      information = "Ready, press FAB to load a picture.";
+    });
+  }
 
   final FaceDetector _faceDetector = FaceDetector(
     options: FaceDetectorOptions(
+      performanceMode: FaceDetectorMode.accurate,
+      enableTracking: true,
+      enableLandmarks: true,
       enableContours: true,
       enableClassification: true,
     ),
@@ -80,12 +105,12 @@ class _MyHomePageState extends State<MyHomePage> {
       body: photo != null
           ? FittedBox(
               child: SizedBox(
-                  width: image?.width.toDouble(),
-                  height: image?.height.toDouble(),
+                  width: myImage?.width.toDouble(),
+                  height: myImage?.height.toDouble(),
                   child: CustomPaint(
-                      painter: FacePainter(image: image!, faces: faces))))
-          : const Text(
-              "No Image",
+                      painter: FacePainter(myImage: myImage!, duck: duck, faces: faces))))
+          : Text(
+              information,
               style: TextStyle(fontSize: 20),
             ),
       floatingActionButton: FloatingActionButton(
@@ -112,19 +137,35 @@ class _MyHomePageState extends State<MyHomePage> {
       decodeImageFromList(data!).then((value) {
         setState(() {
           photo = photo;
-          image = value;
+          myImage = value;
           faces = faceslocal;
         });
       });
     });
   }
+
+  //this is a helper to load images and resize to your needs.
+  Future<ui.Image> getUiImage(String imageAssetPath, int height, int width) async {
+    final ByteData assetImageByteData = await rootBundle.load(imageAssetPath);
+    image.Image? baseSizeImage = image.decodeImage(assetImageByteData.buffer.asUint8List());
+    image.Image resizeImage = image.copyResize(baseSizeImage!, height: height, width: width);
+    ui.Codec codec = await ui.instantiateImageCodec(image.encodePng(resizeImage));
+    ui.FrameInfo frameInfo = await codec.getNextFrame();
+    return frameInfo.image;
+  }
+
 }
 
+/// this is the custom painter that draws the image and the faces on top of it.
+/// For new images, you need to add them to the constructor.  The CustomPainter
+/// can't load the images itself, because that an async and then it just won't
+/// wait on the paint method.  so you get blank images.
 class FacePainter extends CustomPainter {
-  FacePainter({required this.image, required this.faces});
+  FacePainter({required this.myImage, required this.faces, required this.duck});
 
-  ui.Image image;
+  ui.Image myImage;
   List<Face> faces;
+  ui.Image duck;
 
   final List<FaceContourType> listFaceContourtype = <FaceContourType>[
     FaceContourType.face,
@@ -144,13 +185,32 @@ class FacePainter extends CustomPainter {
     FaceContourType.rightCheek,
   ];
 
+  final List<FaceLandmarkType> listLandMarktype = <FaceLandmarkType>[
+    FaceLandmarkType.leftEar,
+    FaceLandmarkType.rightEar,
+    FaceLandmarkType.leftMouth,
+    FaceLandmarkType.rightMouth,
+    FaceLandmarkType.bottomMouth,
+    FaceLandmarkType.noseBase,
+    FaceLandmarkType.leftCheek,
+    FaceLandmarkType.rightCheek,
+    FaceLandmarkType.leftEye,
+    FaceLandmarkType.rightEye,
+  ];
+
   @override
-  void paint(Canvas canvas, Size size) {
-    canvas.drawImage(image, Offset.zero, Paint());
+  paint(Canvas canvas, Size size) async {
+    canvas.drawImage(myImage, Offset.zero, Paint());
     final Paint paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10.0
       ..color = Colors.red;
+    final Paint paintBlue = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 10.0
+      ..color = Colors.blue;
+
+
 
     for (final Face face in faces) {
       //draw the bounding box first.
@@ -166,10 +226,32 @@ class FacePainter extends CustomPainter {
           }
         }
       }
+
+      //draw the landmarks as small dots.
+      for (final FaceLandmarkType type in listLandMarktype) {
+        print("landmark: " );
+        final faceLandmark = face.landmarks[type];
+        if (faceLandmark != null) {
+          print ("there is a landmark");
+          canvas.drawCircle(
+              Offset(faceLandmark.position.x.toDouble(),
+                  faceLandmark.position.y.toDouble()),
+              30,
+              paintBlue);
+        }
+      }
+      //draw duck on the left cheek
+      final Point leftCheek = face.landmarks[FaceLandmarkType.leftCheek]!.position;
+      Offset offset = Offset(leftCheek.x.toDouble(), leftCheek.y.toDouble());
+      canvas.drawImage(duck, offset, paint);
+
     }
   }
 
   @override
   bool shouldRepaint(FacePainter oldDelegate) =>
-      image != oldDelegate.image || faces != oldDelegate.faces;
+      myImage != oldDelegate.myImage || faces != oldDelegate.faces;
+
+
+
 }
