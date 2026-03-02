@@ -14,6 +14,7 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   late TextEditingController nameController;
+
   @override
   void initState() {
     super.initState();
@@ -25,12 +26,12 @@ class MyAppState extends State<MyApp> {
     nameController.dispose();
     super.dispose();
   }
+
   int _radioValue = 0;
 
   void _handleRadioValueChange(int? value) {
     setState(() {
       _radioValue = value!;
-      for (var num = 0, x = 1; num < 10; num++, x++) {}
       switch (_radioValue) {
         case 0:
           Fluttertoast.showToast(
@@ -46,7 +47,7 @@ class MyAppState extends State<MyApp> {
           break;
         case 2:
           Fluttertoast.showToast(
-            msg: 'Try again !',
+            msg: 'Maybe !',
             toastLength: Toast.LENGTH_SHORT,
           );
           break;
@@ -81,31 +82,22 @@ class MyAppState extends State<MyApp> {
     );
     Widget rowThree = Container(
       padding: const EdgeInsets.all(8),
-      child: Row(
-        children: <Widget>[
-          const Text('Raido Buttons?'),
-          Radio(
-            value: 0,
-            groupValue: _radioValue,
-            onChanged: _handleRadioValueChange,
-          ),
-          const Text('Euro'),
-          Radio(
-            value: 1,
-            groupValue: _radioValue,
-            onChanged: _handleRadioValueChange,
-          ),
-          const Text('Pound'),
-          Radio(
-            value: 2,
-            groupValue: _radioValue,
-            onChanged: _handleRadioValueChange,
-          ),
-          const Text('Yen'),
-        ],
+      child: RadioGroup(
+        groupValue: _radioValue,
+        onChanged: _handleRadioValueChange,
+        child: Row(
+          children: [
+            const Text('Radio Buttons?'),
+            Radio(value: 0),
+            const Text('Euro'),
+            Radio(value: 1),
+            const Text('Pound'),
+            Radio(value: 2),
+            const Text('Yen'),
+          ],
+        ),
       ),
     );
-
     Widget rowFour = Container(
       padding: const EdgeInsets.all(8),
       child: Row(
@@ -142,8 +134,8 @@ class MyAppState extends State<MyApp> {
 
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      darkTheme: ThemeData.dark(),
+      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.blue) ,useMaterial3: true),
+      darkTheme: ThemeData.dark(useMaterial3: true),
       home: Scaffold(
         appBar: AppBar(title: const Text('Flutter layout demo')),
         body: Column(children: [rowOne, rowTwo, rowThree, rowFour, rowFive]),
