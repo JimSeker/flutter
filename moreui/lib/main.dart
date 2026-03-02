@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, ),
+        useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -38,7 +39,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int? selectedIndex;
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
-  final FocusNode _buttonFocusNode = FocusNode(debugLabel: 'Menu Button');
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(

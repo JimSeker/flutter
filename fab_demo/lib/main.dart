@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
-/*
- * simple app to show state and the FAB
- *
- * This also changes some of the theme for colors.  background color doesn't seem to work.
- *
- */
+/// simple app to show state and the FAB
+/// This also changes some of the theme for colors.
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +20,7 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.blue,
           brightness: Brightness.dark,
         ),
+        useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -32,6 +29,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override

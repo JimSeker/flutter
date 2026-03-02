@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -53,16 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
         shape: const CircularNotchedRectangle(),
         child: Row(
           children: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {},
-            ),
-            IconButton(onPressed: () {},
-                icon: const Icon(Icons.favorite))
+            IconButton(icon: const Icon(Icons.menu), onPressed: () {}),
+            IconButton(icon: const Icon(Icons.search), onPressed: () {}),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.favorite)),
           ],
         ),
       ),
