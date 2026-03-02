@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dialogslider.dart';
-import 'DialogExample.dart';
+import 'dialog_slider.dart';
+import 'dialog_example.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
       ),
       home: const MyHomePage(title: 'Dialog Demo'),
     );
@@ -125,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //Uses the future values to setup a dialog.  Note this is in the same class above
   //so we can use the variable above.
 
-  showSimpleAlertDialog(BuildContext context) {
+  void showSimpleAlertDialog(BuildContext context) {
     //Create a SimpleDialog
     SimpleDialog dialog = SimpleDialog(
       title: const Text('Select a language'),
