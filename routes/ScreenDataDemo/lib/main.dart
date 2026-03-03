@@ -32,7 +32,7 @@ class _FirstRouteState extends State<FirstRoute> {
 
   String returnvalue = "none";
 
-   SetReturnvalue(String value) {
+   void SetReturnvalue(String value) {
     setState(() {
       returnvalue = value;
     });

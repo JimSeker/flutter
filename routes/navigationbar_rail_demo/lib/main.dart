@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   /// This will build the code for NavigationRail, which called above if the screen
   /// is wider than 450 pixels.
- buildRailScaffold (BuildContext context) {
+ Scaffold buildRailScaffold (BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  buildBarScaffold() {
+  Scaffold buildBarScaffold() {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
