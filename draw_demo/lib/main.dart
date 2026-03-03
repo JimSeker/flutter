@@ -186,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
             )));
   }
 
-  getColorList() {
+  List<Widget> getColorList() {
     List<Widget> listWidget = [];
     for (Color color in colors) {
       listWidget.add(colorCircle(color));

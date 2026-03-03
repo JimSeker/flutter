@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 Future<Album> fetchAlbum() async {
   //var parameters = <String, String>{};
-  var uri = Uri.parse('https://jsonplaceholder.typicode.com/albums/1');
+  var uri = Uri.parse('http://jsonplaceholder.typicode.com/albums/1');
   final response = await http.get(uri);
 
 
@@ -89,6 +89,13 @@ Future<Album> fetchAlbum() async {
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
+    //A note, sometimes cloudflare has not allowed the android device to read the response, so it will return a 403 error, but the app is still working as intended, just the server is blocking the request. You can test this by running the app on an emulator and checking the logs.
+
+    print("------------------");
+    print("Failed to load album");
+    print(response.statusCode);
+    print(response.body);
+    print("------------------");
     throw Exception('Failed to load album');
   }
 }
