@@ -4,13 +4,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-
 ///simple app to demo how the http plugin works
 ///as well as the future widget.
 
 void main() {
   runApp(const MyApp());
 }
+
+bool kDebugMode = true; // Set to true to enable debug mode, false to disable. You can set this to false in production.
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -20,9 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       darkTheme: ThemeData.dark(),
       home: const MyHomePage(title: 'Fetch Data Example'),
     );
@@ -51,9 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
+        appBar: AppBar(title: Text(widget.title)),
         body: Center(
           child: FutureBuilder<Album>(
             future: futureAlbum,
@@ -81,7 +78,6 @@ Future<Album> fetchAlbum() async {
   var uri = Uri.parse('http://jsonplaceholder.typicode.com/albums/1');
   final response = await http.get(uri);
 
-
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
@@ -90,12 +86,13 @@ Future<Album> fetchAlbum() async {
     // If the server did not return a 200 OK response,
     // then throw an exception.
     //A note, sometimes cloudflare has not allowed the android device to read the response, so it will return a 403 error, but the app is still working as intended, just the server is blocking the request. You can test this by running the app on an emulator and checking the logs.
-
-    print("------------------");
-    print("Failed to load album");
-    print(response.statusCode);
-    print(response.body);
-    print("------------------");
+    if (kDebugMode) {
+      print("------------------");
+      print("Failed to load album");
+      print(response.statusCode);
+      print(response.body);
+      print("------------------");
+    }
     throw Exception('Failed to load album');
   }
 }
@@ -108,10 +105,6 @@ class Album {
   Album({required this.userId, required this.id, required this.title});
 
   factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
-      userId: json['userId'],
-      id: json['id'],
-      title: json['title'],
-    );
+    return Album(userId: json['userId'], id: json['id'], title: json['title']);
   }
 }
