@@ -1,4 +1,5 @@
-package edu.cs4730.gamepad_demo
+package com.example.gamepad_demo
+
 
 import android.hardware.input.InputManager
 import android.os.Handler
@@ -6,6 +7,7 @@ import android.view.InputDevice
 import android.view.KeyEvent
 import android.view.MotionEvent
 import io.flutter.embedding.android.FlutterActivity
+
 import org.flame_engine.gamepads_android.GamepadsCompatibleActivity
 
 class MainActivity: FlutterActivity(), GamepadsCompatibleActivity {
@@ -17,7 +19,10 @@ class MainActivity: FlutterActivity(), GamepadsCompatibleActivity {
     }
 
     override fun dispatchKeyEvent(keyEvent: KeyEvent): Boolean {
-        return keyListener?.invoke(keyEvent) ?: false
+        if (keyListener?.invoke(keyEvent) == true) {
+            return true
+        }
+        return super.dispatchKeyEvent(keyEvent)
     }
 
     override fun registerInputDeviceListener(
