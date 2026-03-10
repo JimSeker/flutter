@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             height: 600,
 
             child: WebViewWidget(controller: controller),
