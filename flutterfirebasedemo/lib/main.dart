@@ -30,8 +30,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
+        useMaterial3: true,
       ),
-      darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blueGrey,
+          brightness: Brightness.dark,
+        ),
+        useMaterial3: true,
+      ),
       home: AuthGate(),
     );
   }
@@ -161,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
             setState(() {
               //add everything to the data structure, and which updates the UI.
               for (var document in snapshot.docs) {
-                log("value is " + document.data()['first']);
+                log("value is  ${document.data()['first']}");
                 log(document.data()['born'].toString());
                 log("id is ${document.id}");
                 _dataInfos.add(
@@ -189,7 +196,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _dataSubscription?.cancel();
       // to here.
     }
-    ;
   }
 
   void addData() {
