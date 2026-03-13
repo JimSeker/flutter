@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.mlkit_demo"
+    namespace = "edu.cs4730.mlkit_demo"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
