@@ -8,7 +8,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 /// to display banner and interstitial ads.
 ///
 /// Note, it only works on android and iOS devices (if you fix the iOS id as directed).
-/// currently Apr 2025, google_mobile_ads only supports iOS and android.
+/// currently mar 2026, google_mobile_ads only supports iOS and android.
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,7 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
     _interstitialAd?.dispose();
     super.dispose();
   }
+
   InterstitialAd? _interstitialAd;
+
   /// This is a test ad unit ID. You should replace it with your own ad unit ID.
   final String interstitialId = 'ca-app-pub-3940256099942544/1033173712';
 
@@ -91,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _buildMainContent(context) {
+  Column _buildMainContent(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
