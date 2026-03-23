@@ -1,4 +1,4 @@
-package com.example.tabs_demo
+package edu.cs4730.tabs_demo
 
 import io.flutter.embedding.android.FlutterActivity
 

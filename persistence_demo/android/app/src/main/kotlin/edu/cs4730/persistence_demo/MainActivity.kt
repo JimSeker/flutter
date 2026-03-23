@@ -1,4 +1,4 @@
-package com.example.persistence_demo
+package edu.cs4730.persistence_demo
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,4 +1,4 @@
-package com.example.rail_demo
+package edu.cs4730.rail_demo
 
 import io.flutter.embedding.android.FlutterActivity
 

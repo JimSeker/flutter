@@ -1,4 +1,4 @@
-package com.example.gamepad_demo
+package edu.cs4730.gamepad_demo
 
 
 import android.hardware.input.InputManager

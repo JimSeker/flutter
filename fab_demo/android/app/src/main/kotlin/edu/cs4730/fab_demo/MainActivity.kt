@@ -1,4 +1,4 @@
-package com.example.fab_demo
+package edu.cs4730.fab_demo
 
 import io.flutter.embedding.android.FlutterActivity
 

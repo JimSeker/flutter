@@ -1,4 +1,4 @@
-package com.example.httprestdemo
+package edu.cs4730.httprestdemo
 
 import io.flutter.embedding.android.FlutterActivity
 

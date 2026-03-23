@@ -1,4 +1,4 @@
-package com.example.materialdesigndemo
+package edu.cs4730.materialdesigndemo
 
 import io.flutter.embedding.android.FlutterActivity
 
