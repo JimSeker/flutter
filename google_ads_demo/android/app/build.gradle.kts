@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.google_ads_demo"
+    namespace = "edu.cs4730.google_ads_demo"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
     //ndkVersion = "27.0.12077973"
@@ -22,7 +22,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.google_ads_demo"
+        applicationId = "edu.cs4730.google_ads_demo"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
