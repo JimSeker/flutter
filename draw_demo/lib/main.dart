@@ -9,7 +9,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 /// a number of pieces to make it work again.
 
 void main() {
-  //WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   //SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: [SystemUiOverlay.bottom]);
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -29,8 +29,15 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
       ),
-      // darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blueGrey,
+          brightness: Brightness.dark,
+        ),
+        useMaterial3: true,
+      ),
       home: const MyHomePage(title: 'Drawing Demo Page'),
       debugShowCheckedModeBanner: false,
     );
@@ -273,6 +280,7 @@ class DrawingPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.drawColor(Colors.white, BlendMode.src);
     for (int i = 0; i < (pointsList.length - 1); i++) {
       if (pointsList[i].points.dx != -1 && pointsList[i + 1].points.dx != -1) {
         canvas.drawLine(pointsList[i].points, pointsList[i + 1].points,
