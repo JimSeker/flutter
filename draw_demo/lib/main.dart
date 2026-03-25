@@ -2,12 +2,20 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+//import 'package:flutter/services.dart';
 
 ///This code is based off Sharan Singh code in https://github.com/sharansingh00002/draw
 /// which badly out of date (flutter 1.0), but the framework was still workable, so I fixed and changed
 /// a number of pieces to make it work again.
 
 void main() {
+  //WidgetsFlutterBinding.ensureInitialized();
+  //SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: [SystemUiOverlay.bottom]);
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //   systemNavigationBarColor: Colors.transparent, // Makes the nav bar area transparent
+  //   // ... other style properties
+  // ));
   runApp(const MyApp());
 }
 
@@ -59,12 +67,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(8.0),
+        bottomNavigationBar: SafeArea(
+          //padding:  EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: MediaQuery.of(context).padding.bottom),
           child: Container(
               padding: const EdgeInsets.only(left: 8.0, right: 8.0),
               decoration: BoxDecoration(
