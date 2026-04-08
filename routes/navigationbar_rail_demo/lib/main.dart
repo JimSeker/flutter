@@ -35,8 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int selectedIndex = 0;
   final List<NavigationRailDestination> destinationsRail = [
     NavigationRailDestination(
-      icon: const Icon(Icons.flight_outlined),
-      selectedIcon: const Icon(Icons.flight),
+      icon: const Icon(Icons.flight_land_outlined),
+      selectedIcon: const Icon(Icons.flight_takeoff_outlined),
       label: Text('Flight'),
     ),
     NavigationRailDestination(
@@ -62,11 +62,11 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   final List<NavigationDestination> destinationsBar = const <NavigationDestination>[
-    NavigationDestination(icon: Icon(Icons.flight), label: 'flight'),
-    NavigationDestination(icon: Icon(Icons.directions_bike), label: 'bike'),
-    NavigationDestination(icon: Icon(Icons.directions_boat), label: 'boat'),
-    NavigationDestination(icon: Icon(Icons.directions_bus), label: 'bus'),
-    NavigationDestination(icon: Icon(Icons.directions_car), label: 'car'),
+    NavigationDestination(icon: Icon(Icons.flight_land),  selectedIcon: Icon(Icons.flight_takeoff), label: 'flight'),
+    NavigationDestination(icon: Icon(Icons.directions_bike_outlined), selectedIcon: Icon(Icons.directions_bike), label: 'bike'),
+    NavigationDestination(icon: Icon(Icons.directions_boat_outlined), selectedIcon: Icon(Icons.directions_boat),label: 'boat'),
+    NavigationDestination(icon: Icon(Icons.directions_bus_outlined),  selectedIcon: Icon(Icons.directions_bus),label: 'bus'),
+    NavigationDestination(icon: Icon(Icons.directions_car_filled_outlined), selectedIcon: Icon(Icons.directions_car),label: 'car'),
   ];
 
   final List<Icon> icons = const [

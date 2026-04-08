@@ -57,9 +57,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       bottomNavigationBar: NavigationBar(
         destinations: const <Widget>[
-          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.mail), label: 'Messages'),
-          NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
+          NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home),  label: 'Home'),
+          NavigationDestination(icon: Icon(Icons.mail_outline), selectedIcon: Icon(Icons.mail), label: 'Messages'),
+          NavigationDestination(icon: Icon(Icons.person_outlined), selectedIcon: Icon(Icons.person),label: 'Profile'),
         ],
         selectedIndex: _selectedIndex,
         indicatorColor: Colors.blue,
