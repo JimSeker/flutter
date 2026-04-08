@@ -61,18 +61,18 @@ class DrawerWidgetState extends State<DrawerWidget> {
           ),
         ),
         NavigationDrawerDestination(
-          icon: Icon(Icons.add_outlined),
-          selectedIcon: Icon(Icons.add),
+          icon: Icon(Icons.add_a_photo_outlined),
+          selectedIcon: Icon(Icons.add_a_photo),
           label: const Text('First Screen'),
         ),
         NavigationDrawerDestination(
-          icon: Icon(Icons.check_outlined),
-          selectedIcon: Icon(Icons.check),
+          icon: Icon(Icons.check_circle_outline),
+          selectedIcon: Icon(Icons.check_circle),
           label: Text('Second Screen'),
         ),
         NavigationDrawerDestination(
           icon: Icon(Icons.insert_emoticon),
-          selectedIcon: Icon(Icons.insert_emoticon),
+          selectedIcon: Icon(Icons.insert_emoticon_rounded),
           label: Text('Third Screen'),
         ),
         NavigationDrawerDestination(
